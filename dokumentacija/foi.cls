@@ -281,6 +281,7 @@ unicode
 \def\predmetUUI{\prijevod{Uvod u umjetnu inteligenciju}{Introduction to Artificial Intelligence}}
 \def\predmetUUI{\prijevod{Uvod u umjetnu inteligenciju}{Introduction to Artificial Intelligence}}
 \def\predmetBP{\prijevod{Baze podataka 1}{Databases 1}}
+\def\predmetSI{\prijevod{Sigurnost interneta}{Internet safety}}
 
 % Naslovne stranice
 \renewcommand\maketitle{%
