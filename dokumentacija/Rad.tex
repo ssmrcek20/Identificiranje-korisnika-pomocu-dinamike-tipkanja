@@ -52,12 +52,29 @@ Završni ili diplomski rad studenta/studentice je konačni rezultat uloženog na
 Načelna napomena o strukturi rada jest da se nazivi i struktura poglavlja obavezno definiraju u dogovoru s mentorom/mentoricom. Sadržajna preporuka je da u uvodu treba opisati što je tema završnog/diplomskog rada, zašto je tema značajna te koja je motivacija studenta/ studentice za odabir teme \cite{oraictolic2011AkademskoPismoStrategije}.
 
 
-\chapter{Skup podataka dinamičkog tipkanja}
-Za ovaj rad pronašli smo besplatni skup podataka za dinamičko tipkanje KeyRecs. Skup podataka je dobiven od 99 sudionika koji su sudjelovali u dva zadatka  \cite{Dias2023}. Prvi zadatak je bio pisanje lozinke „vpwjkeurkb“ 200 puta kroz dvije sesija, a drugi zadatak je bio prepisivanje 10 odlomaka raznih literatura isto kroz dvije sesije \cite{Dias2023}. Ti zadaci su se provodili preko web stranice koja je bilježila razna vremena tijekom tipkanja \cite{Dias2023}. Vremena koja su se bilježila su: od pritiska tipke do puštanja tipke (DU), od pritiska tipke do pritiska druge tipke (DD), od puštanja tipke do pritiska druge tipke (UD), od puštanja tipke do puštanja druge tipke(UU), od pritiska tipke do puštanja druge tipke (DU) i ukupno vrijeme tipkanja \cite{Dias2023}. Ta vremena su dobro prikazana na slici \ref{fig:graf-vremena-tipkanja}. Osim tih vremena za svakoga korisnika su  zabilježene: godine, spol, nacionalnost i dominantna ruka  \cite{Dias2023}.
 
-\begin{figure}[]
+\chapter{Skup podataka dinamičkog tipkanja}
+Za ovaj rad pronašli smo besplatni skup podataka za dinamičko tipkanje KeyRecs. Skup podataka je dobiven od 99 sudionika koji su sudjelovali u dva zadatka  \cite{Dias2023}. Prvi zadatak je bio pisanje lozinke „vpwjkeurkb“ 200 puta kroz dvije sesija, a drugi zadatak je bio prepisivanje 10 odlomaka raznih literatura isto kroz dvije sesije \cite{Dias2023}. Ti zadaci su se provodili preko web stranice koja je bilježila razna vremena tijekom tipkanja \cite{Dias2023}. Vremena koja su se bilježila su: od pritiska tipke do puštanja tipke (DU), od pritiska tipke do pritiska druge tipke (DD), od puštanja tipke do pritiska druge tipke (UD), od puštanja tipke do puštanja druge tipke(UU), od pritiska tipke do puštanja druge tipke (DU) i ukupno vrijeme tipkanja \cite{Dias2023}. Ta vremena su dobro prikazana na slici \ref{fig:graf-vremena-tipkanja}. Osim tih vremena za svakoga korisnika su  zabilježene: godine, spol, nacionalnost i dominantna ruka  \cite{Dias2023}. Podaci za prvi zadatak pisanja lozinke su zapisani kao tablica \ref{tab:KeyRecs-podaci}. U svakom redu je zabilježeno: tko je pisao, koja je sesija, koje ponavljanje i vremena za svaku tipku sifre \cite{Dias2023}. Vremena su zabilježena u kolone (D|U).tipka1.tipka2 gdje prvi dio prikazuje određeno vrijeme na temelju slike \ref{fig:graf-vremena-tipkanja} a druga dva dijela na koju tipku se odnosi \cite{Dias2023}.
+
+\begin{table}[!h]
     \centering
-    \includegraphics[width=0.9\textwidth]{slike/tipkanje-graf.jpg}
+    \caption{Dio podataka iz KeyRecs skupa podataka; prema \cite{Dias2023}}
+    \begin{tabularx}{1\textwidth}{|l|l|l|l|l|l|l|l|l|l|}
+    \hline
+        \cellcolor{gray!25}participant & \cellcolor{gray!25}session & \cellcolor{gray!25}repetition & \cellcolor{gray!25}DU.v.v & \cellcolor{gray!25}DD.v.p & \cellcolor{gray!25}DU.v.p & \cellcolor{gray!25}UD.v.p & \cellcolor{gray!25}UU.v.p & \cellcolor{gray!25}DU.p.p & \cellcolor{gray!25}... \\ \hline
+        p001 & 1 & 1 & 0.129 & 1.917 & 1.804 & 2.046 & 1.933 & 0.113 & ... \\ \hline
+        p001 & 1 & 2 & 0.112 & 0.192 & 0.096 & 0.304 & 0.208 & 0.096 & ... \\ \hline
+        p001 & 1 & 3 & 0.088 & 0.253 & 0.182 & 0.341 & 0.27 & 0.071 & ... \\ \hline
+        ... & ... & ... & ... & ... & ... & ... & ... & ... & ... \\ \hline
+    \end{tabularx}
+    \\[10pt]
+    \label{tab:KeyRecs-podaci}
+\end{table}
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{slike/tipkanje-graf.jpg}
     \caption{Grafikon bilježenih vremena tijekom tipkanja; preuzeto iz \cite{Dias2023}}
     \label{fig:graf-vremena-tipkanja}
 \end{figure}
@@ -155,15 +172,8 @@ ispred same slike umetnite jedan prazan redak (osim ako je slika pozicionirana n
 
     \item dozvoljeno je preuzeti samo jednu sliku, grafikon ili tablicu u izvornom obliku iz istog izvora. Za doslovno preuzimanje većeg dijela sadržaja potrebno je ishoditi dozvolu nositelja autorskih prava;
 
-    \item primjer označavanja slike prikazan je kod slike \ref{fig:podjela}.
 \end{itemize}
 
-\begin{figure}[]
-    \centering
-    \includegraphics[width=0.9\textwidth]{slike/slika.png}
-    \caption{Osnovni koncepti modela umjetnog agenta; preuzeto iz \cite{russell2022ArtificialIntelligenceModern}}
-    \label{fig:podjela}
-\end{figure}
 
 \subsection{Tablice}
 
@@ -248,7 +258,7 @@ $$
 
 Želite li koristiti kratice pojmova u tekstu, kad prvi put spominjete pojam potrebno je navesti puni naziv, a kraticu navesti u zagradi: informacijske i komunikacijske tehnologije (IKT). Nakon toga možete koristiti kratice u tekstu. Poželjno je u naslovima koristiti pune nazive.
 
-Kratice je moguće definirati i korištenjem naredbe \mintinline{text}{\acrodef{}{}}, iz \mintinline{text}{acronym} paketa, prije početka dokumenta (naredba \mintinline{text}{\begin{document}}). Tako definirane kratice pozivaju se unutar dokumenta naredbom \mintinline{text}{\ac{}} ili \mintinline{text}{\Ac{}} za veliko početno slovo. Takva će naredba svoje prvo pojavljivanje u dokumentu zamijeniti potpuno ispisanim značenjem kratice i kraticom, dok će svako sljedeće pojavljivanje biti zamijenjeno samo postavljenom kraticom, npr.: \Ac{VAS} je sustav koji se sastoji od većeg broja agenata. Prilikom ponovnog korištenja naredbe, ispisana je samo kratica: \ac{VAS}.
+Kratice je moguće definirati i korištenjem naredbe \mintinline{text}{\acrodef{}{}}, iz \mintinline{text}{acronym} paketa, prije početka dokumenta (naredba \mintinline{text}{\begin{document}}). Tako definirane kratice pozivaju se unutar dokumenta naredbom \mintinline{text}{\ac{}} ili \mintinline{text}{\Ac{}} za veliko početno slovo. 
 
 \subsection{Strano nazivlje}
 
