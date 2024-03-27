@@ -54,7 +54,7 @@ Identifikacija je proces određivanja identiteta osobe bez prethodne deklaracije
 
 Za razliku od fizičkih karakteristika koje su unikatne od osobe do osobe, ponašajne karakteristike se mijenjaju tijekom vremena te nisu toliko pouzdane što se tiče sigurnosti. Ponašajne karakteristike su obično implementirane kao potpora fizičkim. Na ponašajne karakteristike utječu stvari poput emocionalnog stanja osobe, zdravstvenih uvjeta te uvjeta okoline. Gore navedene stvari su primjenjive na dinamiku tipkanja koja je fokus ovog projekta. Obje vrste karakteristika moraju ispunjavati uvjete koje biometrijske karakteristike trebaju imati. To su jedinstvnenost, univerzalnost, lakoća prikupljanja, nepromjenjivost i prihvatljivost.\cite{Kasprowski2022} Jedinstvenost kaže da bi karakteristika trebala biti jedinstvena za osobu tj. dvije osobe nebi smjele imati identičnu mjeru neke značajke. Univerzalnost znači da bi sve osobe morale posjedovati tu značajku. Značajka bi trebala biti lako prikupljiva te se nebi trebala mijenjati kroz vrijeme. Također mora biti korisničko prihvatljiva. Prvi primjeri korištenja dinamike tipkanja u svrhu identifikacije pojavili su se tijekom 2. Svjetskog Rata kod slanja poruka Morsovim kodom. Način na koji je poruka otipkana mogla je dati uvid u legitimnost poruke.\cite{Haring2007}
 
-Postojeća rješenja i implementacije bazirane su na statističkim podacima određenih događaja. Događaji koji se uglavnom koriste su duljine trajanja pojedinih pritisaka tipke te intervala između različitih pritisaka, scenariji u kojima se koriste "Shift" i "Capslock" tipke za pisanje velikih slova i korištenje strelica za pozicioniranje u tekstu.\cite{Kasprowski2022} Detaljnije pojašnjenje karakterističnih mjera bit će opisano u narednim poglavljima.
+Postojeća rješenja i implementacije bazirane su na statističkim podacima određenih događaja. Događaji koji se uglavnom koriste su duljine trajanja između pritiska i odpuštanja jedne tipke (eng. Dwell time), vrijeme koje protekne između odpuštanja jedne te pritiska druge tipke (eng. Interval), vrijeme između otpuštanja prve te odpuštanja druge tipke (eng. Up to up), vrijeme između pritiska prve tipke te pritiska druge (eng. Flight time), vrijeme između pritiska prve tipke te odpuštanja druge scenariji u kojima se koriste "Shift" i "Capslock" tipke za pisanje velikih slova i korištenje strelica za pozicioniranje u tekstu.\cite{Kasprowski2022} Manje korištene značajke uključuju i poziciju prsta na tipkama što zahtjeva korištenje kamere. Također se može promatrati i odabir prstiju koji se koristi za određene tipke za koje je također potrebna kamera.
 Kod procesa identifikacije koriste se dvije vrste tekstova: oni s definiranim brojem znakova i oni s nasumično odabranom duljinom.\cite{Kasprowski2022} Podaci o dinamici tipkanja se obično prikupljaju tipkovnicom, no kako su pametni mobiteli u današnje vrijeme sveprisutni, moguće je i na taj način obaviti prikupljanje. Ovdje također možemo zabilježiti točne koordinate pritiska, veličinu ekrana koju prst prekriva kod određene tipke te jačinu pritiska.\cite{Lee2018}
 
 \chapter{Skup podataka dinamičkog tipkanja}
@@ -84,7 +84,7 @@ Za ovaj rad pronašli smo besplatni skup podataka za dinamičko tipkanje KeyRecs
 \end{figure}
 
 
-
+\chapter{Metode analize dinamike tipkanja pomoću umjetne inteligencije}
 
 
 
