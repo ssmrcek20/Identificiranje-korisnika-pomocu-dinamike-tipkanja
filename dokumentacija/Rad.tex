@@ -99,7 +99,15 @@ Umjetna inteligencija i strojno učenje prikladan su način za obradu velike kol
 
 \section{Metode klasičnog strojnog učenja}
 Strojno učenje (engl. Machine learning) je grana umjetne inteligencije (engl. Artificial intelligence) čiji je fokus na korištenju podataka i algoritama na način da imitiraju kako ljudi uče, postepeno poboljšavajući svoje rezultate \cite{ibmcom}. 
-Algoritmi strojnog učenja organizirani su u sljedeće grupe: nadzirano učenje (engl. supervised learning), nenadzirano učenje (engl. unsupervised learning), polunadzirano učenje (engl. semi-supervised learning), učenje s pojačanjem (engl. reinforcement learning). 
+Algoritmi strojnog učenja organizirani su u sljedeće grupe: nadzirano učenje (engl. supervised learning), nenadzirano učenje (engl. unsupervised learning), polunadzirano učenje (engl. semi-supervised learning) i učenje s pojačanjem (engl. reinforcement learning). Dio podjele se može vidjeti na slici \ref{fig:machine-graf}.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{slike/machine.jpg}
+    \caption{Grafikon podjele strojnog učenja; preuzeto iz \cite{Machine}}
+    \label{fig:machine-graf}
+\end{figure}
+
 Nadzirano učenje je vrsta strojnog učenja dobila gdje je stroj "nadgledan" dok uči, što znači da se algoritmu daju informacije kako bi mu se pomoglo u učenju. Definiran je korištenjem označenih podataka (engl. Labeled Data). Označeni podaci skup su podataka koji sadrži puno primjera značajki (engl. Features) i mete (engl. Target). Nadzirano učenje koristi algoritme koji uče odnos značajki i mete iz skupa podataka. Taj se proces naziva obukom ili treniranjem. \cite{Coursera2023}
 Algoritmi za učenje bez nadzora ne koriste iste označene skupove za obuku i podatke. Umjesto toga, stroj traži manje očite uzorke u podacima. Strojno učenje bez nadzora korisno je kada treba identificirati obrasce i koristiti podatke za donošenje odluka. \cite{Coursera2023}
 Polunadzirano učenje je relativno nova i manje popularna vrsta strojnog učenja koja, tijekom obuke, spaja znatnu količinu neoznačenih podataka s malom količinom označenih podataka. Polunadzirano učenje je između nadziranog učenja (s označenim podacima o osposobljavanju) i nenadziranog učenja (neoznačeni podaci o osposobljavanju). \cite{Datacamp}
@@ -117,7 +125,14 @@ Random Forest algoritam je skup stabala odlučivanja koji se koriste za klasifik
 Jednom obučena, nasumična šuma uzima iste podatke i unosi ih u svako stablo odlučivanja. Svako stablo daje predviđanje, a nasumična šuma zbraja rezultate. Najčešće predviđanje među svim stablima odlučivanja zatim se odabire kao konačno predviđanje za skup podataka. \cite{Coursera2024}
 
 \section{Metode dubokog učenja}
-Sposobnost računala da obavljaju neke složene zadatke - prikupljanje podataka sa slike ili videa, na primjer - još uvijek je daleko ispod onoga za što su ljudi sposobni. Modeli dubokog učenja uvode iznimno sofisticiran pristup strojnom učenju i spremni su za rješavanje ovih izazova jer su posebno modelirani prema ljudskom mozgu. Aplikacije dubokog učenja koriste slojevitu strukturu algoritama koja se naziva umjetna neuronska mreža (ANN). Dizajn takvog ANN-a inspiriran je biološkom neuronskom mrežom ljudskog mozga, što dovodi do procesa učenja koji je mnogo sposobniji od standardnih modela strojnog učenja. \cite{Wolfewicz}
+Sposobnost računala da obavljaju neke složene zadatke - prikupljanje podataka sa slike ili videa, na primjer - još uvijek je daleko ispod onoga za što su ljudi sposobni. Modeli dubokog učenja uvode iznimno sofisticiran pristup strojnom učenju i spremni su za rješavanje ovih izazova jer su posebno modelirani prema ljudskom mozgu. Aplikacije dubokog učenja koriste slojevitu strukturu algoritama koja se naziva umjetna neuronska mreža (ANN). Dizajn takvog ANN-a inspiriran je biološkom neuronskom mrežom ljudskog mozga, što dovodi do procesa učenja koji je mnogo sposobniji od standardnih modela strojnog učenja. \cite{Wolfewicz} Postoji više načina dubokog učenja koji su prikazani na slici \ref{fig:deep-graf} te neki će biti i objašnjeni u nastavku.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{slike/deep.jpg}
+    \caption{Vrste dubokog učenja; preuzeto iz \cite{Deep}}
+    \label{fig:deep-graf}
+\end{figure}
 
 \subsection{Convolutional Neural Networks}
 Konvolucijska neuronska mreža (CNN) vrsta je algoritma dubokog učenja koji je posebno prikladan za zadatke prepoznavanja i obrade slika. Sastoji se od više slojeva, uključujući konvolucijske slojeve, slojeve za udruživanje i potpuno povezane slojeve. 
