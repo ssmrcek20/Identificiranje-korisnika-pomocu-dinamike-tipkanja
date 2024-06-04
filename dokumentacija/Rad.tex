@@ -72,7 +72,29 @@ Kod procesa identifikacije koriste se dvije vrste tekstova: oni s definiranim br
 \end{figure}
 
 \chapter{Skup podataka dinamičkog tipkanja}
-Za ovaj rad pronašli smo besplatni skup podataka za dinamičko tipkanje KeyRecs. Skup podataka je dobiven od 99 sudionika koji su sudjelovali u dva zadatka  \cite{Dias2023}. Prvi zadatak je bio pisanje lozinke „vpwjkeurkb“ 200 puta kroz dvije sesija, a drugi zadatak je bio prepisivanje 10 odlomaka raznih literatura isto kroz dvije sesije \cite{Dias2023}. Ti zadaci su se provodili preko web stranice koja je bilježila razna vremena tijekom tipkanja \cite{Dias2023}. Vremena koja su se bilježila su: od pritiska tipke do puštanja tipke (DU), od pritiska tipke do pritiska druge tipke (DD), od puštanja tipke do pritiska druge tipke (UD), od puštanja tipke do puštanja druge tipke(UU), od pritiska tipke do puštanja druge tipke (DU) i ukupno vrijeme tipkanja \cite{Dias2023}. Ta vremena su dobro prikazana na slici \ref{fig:graf-vremena-tipkanja}. Osim tih vremena za svakoga korisnika su  zabilježene: godine, spol, nacionalnost i dominantna ruka  \cite{Dias2023}. Podaci za prvi zadatak pisanja lozinke su zapisani kao tablica \ref{tab:KeyRecs-podaci}. U svakom redu je zabilježeno: tko je pisao, koja je sesija, koje ponavljanje i vremena za svaku tipku šifre \cite{Dias2023}. Vremena su zabilježena u kolone (D|U).tipka1.tipka2 gdje prvi dio prikazuje određeno vrijeme na temelju slike \ref{fig:graf-vremena-tipkanja} a druga dva dijela na koju tipku se odnosi \cite{Dias2023}.
+Postoji nekoliko skupova podatka za dinamiku tipkanja koje se često koriste u radovima. To su: Buffalo, Clarkson II, KeyRecs i DSN-2009.
+
+\section{DSN-2009}
+
+Ovaj skup podataka je napravljen za članak "Comparing Anomaly-Detection Algorithms for Keystroke Dynamics,"  za DNS konferenciju 2009. od strane Kevin Killourhy i Roy Maxion \cite{DNS}. Skup podataka je dostupan na njihovoj stranici \cite{DNS} gdje je taj skup i ukratko opisan. Prema \cite{DNS} skup je dobiven od 51 sudionika koji su pisali istu lozinku 400 puta u 8 sesija. Lozinka koju su pisali je „.tie5Roanl“, ona je predstavljala snažnu lozinku od 10 znakova. Za prikupljanje tipkanja sudionika korišten je laptop s aplikacijom za pisanje lozinke te vanjski precizan mjerač vremena. Prilikom pisanja lozinke prikupljala su se vremena kada je tipka pritisnuta, kada je tipka puštena i koja je to tipka. Skup podataka se sastoji od 34 stupca te u svakom retku je zapisano tko je pisao, koja je sesija, koje ponavljanje i vremena za svaku tipku. Vremena su zabilježena u stupce: H.tipka koja predstavlja vrijeme držanja određene tipke, DD.tipka1.tipka2 koja predstavlja vrijeme od kad je pritisnuta prva tipka do kad je pritisnuta druga tipka i UD.tipka1.tipka2 koja predstavlja vrijeme od kad je prva tipka puštena do kad je druga tipka pritisnuta. Ta vremena se mogu vidjeti na slici \ref{fig:graf-vremena-tipkanja} te dio tablice se može vidjeti na \ref{tab:DNS-podaci}.
+
+\begin{table}[!h]
+    \centering
+    \caption{Dio podataka iz DNS-2009 skupa podataka; prema \cite{DNS}}
+    \begin{tabularx}{1\textwidth}{|l|l|l|l|l|l|l|l|l|l|}
+    \hline
+        \cellcolor{gray!25}subject & \cellcolor{gray!25}sessionIndex & \cellcolor{gray!25}rep & \cellcolor{gray!25}H.period & \cellcolor{gray!25}DD.period.t & \cellcolor{gray!25}UD.period.t & \cellcolor{gray!25}H.t & \cellcolor{gray!25}DD.t.i & \cellcolor{gray!25}... \\ \hline
+        s002 & 1 & 1 & 0.1491 & 0.3979 & 0.2488 & 0.1069 & 0.1674 & ... \\ \hline
+        s002 & 1 & 2 & 0.1111 & 0.3451 & 0.2340 & 0.0694 & 0.1283 & ... \\ \hline
+        s002 & 1 & 3 & 0.1328 & 0.2072 & 0.0744 & 0.0731 & 0.1291 & ... \\ \hline
+        ... & ... & ... & ... & ... & ... & ... & ... & ... \\ \hline
+    \end{tabularx}
+    \\[10pt]
+    \label{tab:DNS-podaci}
+\end{table}
+
+\section{KeyRecs}
+Ovaj skup podataka je dobiven od 99 sudionika koji su sudjelovali u dva zadatka  \cite{Dias2023}. Prvi zadatak je bio pisanje lozinke „vpwjkeurkb“ 200 puta kroz dvije sesija, a drugi zadatak je bio prepisivanje 10 odlomaka raznih literatura isto kroz dvije sesije \cite{Dias2023}. Ti zadaci su se provodili preko web stranice koja je bilježila razna vremena tijekom tipkanja \cite{Dias2023}. Vremena koja su se bilježila su: od pritiska tipke do puštanja tipke (DU), od pritiska tipke do pritiska druge tipke (DD), od puštanja tipke do pritiska druge tipke (UD), od puštanja tipke do puštanja druge tipke(UU), od pritiska tipke do puštanja druge tipke (DU) i ukupno vrijeme tipkanja \cite{Dias2023}. Ta vremena su dobro prikazana na slici \ref{fig:graf-vremena-tipkanja}. Osim tih vremena za svakoga korisnika su  zabilježene: godine, spol, nacionalnost i dominantna ruka  \cite{Dias2023}. Podaci za prvi zadatak pisanja lozinke su zapisani kao tablica \ref{tab:KeyRecs-podaci}. U svakom redu je zabilježeno: tko je pisao, koja je sesija, koje ponavljanje i vremena za svaku tipku šifre \cite{Dias2023}. Vremena su zabilježena u kolone (D|U).tipka1.tipka2 gdje prvi dio prikazuje određeno vrijeme na temelju slike \ref{fig:graf-vremena-tipkanja} a druga dva dijela na koju tipku se odnosi \cite{Dias2023}.
 
 \begin{table}[!h]
     \centering
@@ -89,6 +111,12 @@ Za ovaj rad pronašli smo besplatni skup podataka za dinamičko tipkanje KeyRecs
     \label{tab:KeyRecs-podaci}
 \end{table}
 
+\section{Buffalo}
+Ovaj skup podataka je skupljen od istraživača u SUN Buffalo koji su ispitali 148 sudionika \cite{Free-Text}. Sudionici su pisali Steve Job govor u Stanfordu te odgovore na razna pitanja \cite{Free-Text}. Podaci su skupljeni na različitim tipkovnicama te skupljena su vremena pritiska i puštanja tipki \cite{Free-Text}.
+
+\section{Clarkson II}
+Ovaj skup podataka je skupljen od istraživača u Clarkson sveučilištu koji su ispitali 101 sudionika u korištenju tipkovnice tijekom 2 i pol godine \cite{Free-Text}. Sudionicu su svi koristili različite tipkovnice i radili različite stvari na računalu kad su skupljani njihovi podaci \cite{Free-Text}. Podaci koji su skupljeni su vremena pritiska i puštanja tipki \cite{Free-Text}.
+
 
 \begin{figure}[!h]
     \centering
@@ -96,6 +124,7 @@ Za ovaj rad pronašli smo besplatni skup podataka za dinamičko tipkanje KeyRecs
     \caption{Grafikon bilježenih vremena tijekom tipkanja; preuzeto iz \cite{Dias2023}}
     \label{fig:graf-vremena-tipkanja}
 \end{figure}
+
 
 
 \chapter{Metode analize dinamike tipkanja pomoću umjetne inteligencije}
@@ -149,6 +178,31 @@ Rekurentna neuronska mreža (RNN) vrsta je umjetne neuronske mreže koja koristi
 \subsection{Multilayer Perceptrons}
 MLP je umjetna neuronska mreža koja se sastoji od više slojeva međusobno spojenih čvorova. Imaju isti broj ulaznih i izlaznih slojeva, a između njih mogu imati više skrivenih slojeva. 
 MLP-ovi unose podatke u ulazni sloj mreže. Zatim se slojevi neurona povezuju u graf tako da signal prolazi u jednom smjeru. Izračunavaju ulaz s težinama koje postoje između ulaznog sloja i skrivenih slojeva. Koriste aktivacijske funkcije kako bi odredili koje čvorove aktivirati. Aktivacijske funkcije uključuju ReLU, sigmoidne funkcije i tanh. MLP-ovi obučavaju model kako bi razumjeli korelaciju i naučili ovisnosti između neovisnih i ciljnih varijabli iz skupa podataka za obuku. \cite{Simplilearn}
+
+
+\chapter{Korišteni model i rezultat}
+Metode koje se često koriste u sličnim radovima za dinamiku tipkanja su Convolutional neural network, random forest i support vector machines koje smo sve opisali u 4. poglavlju. Mi smo probali koristit SVM i random forest. Metode su davale slične rezultate preciznosti ali random forest je bio puno brži pa smo se odlučili na korištenje njega za ovaj rad. Prvo smo testirali model na raznim parametrima kako bi dobili najbolje koji su bili oko 340 stabla i maksimalna dubina tih stabla 18, isječak koda \ref{lst:python_para}. Kada bi povećali broj stabla i dubinu od ovih dobivenih, rezultat ne bi bio znatno bolji, ali bi se vrijeme treniranja znatno povećalo.
+
+\begin{listing}
+\begin{minted}{python}
+    param_distributions = {'n_estimators': randint(50,500), 'max_depth': randint(5,20)}
+    rand_search = RandomizedSearchCV(RandomForestClassifier(), param_distributions = param_distributions, n_iter=5, cv=5)
+    rand_search.fit(X_train, y_train.values.ravel())
+
+    best_model = rand_search.best_estimator_
+    print('Najbolji parametri:',  rand_search.best_params_)
+\end{minted}
+\caption{Python kod za dobivanje najboljih parametara za random forest.}
+\label{lst:python_para}
+\end{listing}
+
+Skup podataka koji smo probali koristit je KeyRecs i DSN-2009. Oba skupa su imala oko 2000 podataka, ali KeyRecs je imao više različitih vremena koja je bilježio za tipkanje. Prvotno smo mislili da će KeyRecs biti bolji zbog toga, ali se je pokazao da smo dobivali dosta bolje rezultate s skupom DSN-2009. Vjerujemo da su bolji rezultati bili s DSN-2009 zbog točnijeg načina mjerenja vremena tipkanja i korištenja iste tipkovnice. DSN je koristio vanjski točan mjerač vremena i uvijek istu tipkovnicu dok je KeyRecs mjerio vrijeme samo preko web aplikacije i koristile su se razne tipkovnice za skupljanje podataka. Više o tim skupovima je opisano u 3. poglavlju.
+
+Rezultate koje smo dobili su dobri. Preciznost i točnost modela je između 92 i 94 posto što se poklapa s rezultatima sličnih istraživanja. Točnost se računa kao omjer broja točnih predikcija modela s ukupnim brojem predikcija dok se preciznost računa kao omjer broja pravih pozitivnih rezultata sa zbrojem pravih pozitivnih rezultat i lažnih pozitivnih rezultata.
+
+Dobiveni model je ugrađen u web aplikaciju koja može trenirati i testirati model na DSN-2009 skupu podataka. Osim toga aplikacija može zapisivati našu dinamiku tipkanja i na temelju toga trenirati model za kasniju autentifikaciju. Više o tome u sljedećem poglavlju.
+
+
 
 \chapter{Web aplikacija}
 Sa ciljem prikaza uporabe modela u mogućem stvarnom kontekstu, razvijena je jednostavna web aplikacija. Za razvoj ove aplikacije korišten je programski jezik python te programski okvir Flask. Aplikacija nudi osnovne funkcionalnosti prijave, registracije, odjave, a uz to i dvofaktorsku autentifikaciju, čiji drugi faktor podrazumijeva korištenje biometrijske karakteristike dinamike tipkanja korisnika. 
