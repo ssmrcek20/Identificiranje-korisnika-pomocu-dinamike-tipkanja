@@ -150,6 +150,302 @@ Rekurentna neuronska mreža (RNN) vrsta je umjetne neuronske mreže koja koristi
 MLP je umjetna neuronska mreža koja se sastoji od više slojeva međusobno spojenih čvorova. Imaju isti broj ulaznih i izlaznih slojeva, a između njih mogu imati više skrivenih slojeva. 
 MLP-ovi unose podatke u ulazni sloj mreže. Zatim se slojevi neurona povezuju u graf tako da signal prolazi u jednom smjeru. Izračunavaju ulaz s težinama koje postoje između ulaznog sloja i skrivenih slojeva. Koriste aktivacijske funkcije kako bi odredili koje čvorove aktivirati. Aktivacijske funkcije uključuju ReLU, sigmoidne funkcije i tanh. MLP-ovi obučavaju model kako bi razumjeli korelaciju i naučili ovisnosti između neovisnih i ciljnih varijabli iz skupa podataka za obuku. \cite{Simplilearn}
 
+\chapter{Web aplikacija}
+Sa ciljem prikaza uporabe modela u mogućem stvarnom kontekstu, razvijena je jednostavna web aplikacija. Za razvoj ove aplikacije korišten je programski jezik python te programski okvir Flask. Aplikacija nudi osnovne funkcionalnosti prijave, registracije, odjave, a uz to i dvofaktorsku autentifikaciju, čiji drugi faktor podrazumijeva korištenje biometrijske karakteristike dinamike tipkanja korisnika. 
+
+U nastavku će biti prikazane funkcionalnosti aplikacije te ključni dijelovi programskog koda pomoću kojih je realizirana svaka od tih funkcionalnosti.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{slike/app_pocetna.png}
+    \caption{Početna stranica web aplikacije (vlastita izrada)}
+    \label{fig:app-pocetna}
+\end{figure}
+
+Kada korisnik pristupi aplikaciji, nudi mu se izbor kao na slici gore. Ako korisnik želi pristupiti „pravoj“ aplikaciji, tada odabire opciju „Application“. U drugom slučaju, ako korisnik želi pristupiti mogućnostima rada sa modelom, tada odabire opciju „Model“.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{slike/app_login.png}
+    \caption{Login obrazac (vlastita izrada)}
+    \label{fig:app-login}
+\end{figure}
+
+Odabirom opcije „Application“ korisniku se prikaže web stranica za prijavu u sustav. Nakon što korisnik unese ispravne podatke, tj. korisničko ime i lozinku postojećeg korisnika, tada će se prikazati web stranica sa obrascem kao na slici dolje.
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{slike/app_tipkanje_login.png}
+    \captionof{figure}{Obrazac za autentifikaciju dinamikom tipkanja (vlastita izrada)}
+    \label{fig:app-tipkanje-login}
+\end{center}
+
+
+Na ovoj web stranici implementirana je funkcionalnost prikupljanja biometrijske karakteristike dinamike tipkanja. Ovdje korisnik mora unijeti (utipkati) traženu frazu, koja glasi „.tie5Roanl“. Ova fraza je odabrana iz razloga što je korištena u skupu podataka koji je prvobitno korišten za treniranje i testiranje modela. To rezultira time da imamo identične stupce unutar .csv datoteke koja predstavlja skup podataka za treniranje modela.
+
+
+\begin{listing}
+\begin{minted}{javascript}
+function recordKeyDown(event) {
+    const ignoreKeys = ['Backspace', 'Shift', 'CapsLock', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 
+    'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    if (!ignoreKeys.includes(event.key)) {
+        let record = keystrokes.find(k => k.key === event.key && k.upTime === undefined);
+        if (!record) {
+            keystrokes.push({
+                key: event.key,
+                downTime: event.timeStamp,
+                upTime: undefined
+            });
+        }
+    }
+}
+
+
+function recordKeyUp(event) {
+    const ignoreKeys = ['Backspace', 'Shift', 'CapsLock', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 
+    'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    if (!ignoreKeys.includes(event.key)) {
+        let record = keystrokes.find(k => k.key === event.key && k.upTime === undefined);
+        if (record) {
+            record.upTime = event.timeStamp;
+            console.log('Key: ${record.key}, Down Time: ${record.downTime}, Up Time: ${record.upTime}');
+        }
+    }
+}
+\end{minted}
+\caption{JavaScript funkcije za bilježenje pritisnutih tipki}
+\label{lst:javascript}
+\end{listing}
+
+
+Prikazane su dvije funkcije, recordKeyDown() i recordKeyUp(). Prva funkcija aktivira se na svaki pritisak tipke prilikom unosa tražene fraze, a druga prilikom otpuštanja iste tipke. U obje funkcije definirane su tipke koje treba ignorirati prilikom bilježenja. Prva funkcija provjerit će postojanje zapisa određene tipke i ako ona ne postoji, tada će zapisati tipku. Druga funkcija provjerit će istu stvar te u slučaju ako postoji zapis, ažurira njegov „UpTime“, tj. vrijeme otpuštanja te tipke.
+
+Ako korisnik unese ispravnu frazu i pristisne gumb „Submit Data“, tada će se poslati zahtjev na endpoint poslužitelja definiranog u kodu ispod, a koji služi za autentifikaciju korisnika na temelju dinamike tipkanja.
+
+\begin{listing}
+\begin{minted}{python}
+@keystrokeLogin.route('/keystrokeLogin', methods=['GET', 'POST'])
+def show():
+    if request.method == 'POST':
+        keystrokes = request.json['keystrokes']
+        subject = request.json['subject']
+
+        dict1 = {}
+        dict1['subject'] = subject
+        for i in range(len(keystrokes)):
+            key = keystrokes[i]['key']
+            key = key.replace('5', 'five').replace('R', 'Shift.r')
+
+            key_name = "H." + keystrokes[i]['key']
+            hold_time = (keystrokes[i]['upTime'] - keystrokes[i]['downTime']) / 1000
+            dict1[key_name] = hold_time
+
+            if i < len(keystrokes) - 1:
+                next_key = i + 1
+
+                dd_key_name = "DD." + keystrokes[i]['key'] + "." + keystrokes[next_key]['key']
+                down_down_time = (keystrokes[next_key]['downTime'] - keystrokes[i]['downTime']) / 1000
+                dict1[dd_key_name] = down_down_time
+
+                ud_key_name = "UD." + keystrokes[i]['key'] + "." + keystrokes[next_key]['key']
+                up_down_time = (keystrokes[next_key]['downTime'] - keystrokes[i]['upTime']) / 1000
+                dict1[ud_key_name] = up_down_time
+
+        dict1['DD.l.Return'] = 0
+        dict1['UD.l.Return'] = 0
+        dict1['H.Return'] = 0
+
+        json_object = json.dumps(dict1) 
+        response = requests.post('http://localhost:3000/predict', json=json_object)
+
+        return response.json()
+    else:
+        return render_template('keystrokeLogin.html')
+\end{minted}
+\caption{Python kod za endpoint /keystrokeLogin}
+\label{lst:python_tipkanje_login}
+\end{listing}
+
+Prvo se čitaju dobiveni podaci o pritiscima tipki, ti se podaci zatim obrađuju i vrše se izračuni. Izračuni podrazumijevaju računanje vremena držanja pojedine tipke, koja se dobiva kao razlika vremena otpuštanja i vremena pritiska tipke. Računa se i razlika vremena između pritiska sljedeće tipke u odnosu na trenutnu (down-down, DD) te razlika vremena između pritiska sljedeće tipke i otpuštanja trenutne tipke (up-down, UD). 
+
+Nakon što se na taj način obradi svaka tipka, tj. zabilježeni pritisak tipke, poslat će se zahtjev na endpoint za predikciju od strane modela, i kao odgovor će se vratiti JSON oblik onog odgovora koji se dobije predikcijom od strane modela.
+
+Kod u nastavku prikazuje prethodno spomenuti endpoint za predikciju od strane modela.
+
+\begin{listing}
+\begin{minted}{python}
+@rfmodel.route('/predict', methods=['POST'])
+def predict_user():
+    if not os.path.exists('best_model.pkl') or not os.path.exists('scaler.pkl'):
+        return jsonify({'error': 'Model not trained yet!'}), 400
+
+    model = joblib.load('best_model.pkl')
+    scaler = joblib.load('scaler.pkl')
+
+    expected_order = [
+        "H.period", "DD.period.t", "UD.period.t", 
+        "H.t", "DD.t.i", "UD.t.i", "H.i", "DD.i.e", "UD.i.e", "H.e", "DD.e.five", 
+        "UD.e.five", "H.five", "DD.five.Shift.r", "UD.five.Shift.r", "H.Shift.r", 
+        "DD.Shift.r.o", "UD.Shift.r.o", "H.o", "DD.o.a", "UD.o.a", "H.a", "DD.a.n", 
+        "UD.a.n", "H.n", "DD.n.l", "UD.n.l", "H.l", "DD.l.Return", "UD.l.Return", 
+        "H.Return"
+    ]
+
+    input_json = request.get_json(force=True) 
+    data_df = pd.read_json(input_json, typ='series')
+    data = data_df.drop('subject')
+    data_t = data.to_frame().T
+    data_t = data_t[expected_order]
+    data_scaled = scaler.transform(data_t)
+
+    predictions = model.predict(data_scaled)
+    print(predictions)
+    return jsonify({'predictions': predictions.tolist()})
+\end{minted}
+\caption{Python kod za endpoint /predict}
+\label{lst:python_predict}
+\end{listing}
+
+Prvo se provjerava postojanost modela i skalera, a ukoliko ne postoje prekida se daljnja aktivnost. Ako postoje, tada se učitavaju. Podaci se zatim čitaju iz zahtjeva, iz JSON oblika pretvaraju u DataFrame i uklanja se stupac 'subject'. Zatim se filtriraju podaci tako da ostaju samo oni stupci koji su definirani u listi 'expected\_order'. Sljedeće je skaliranje te vršenje predikcije od strane modela na temelju skaliranih podataka. Odgovor čini lista predikcija dobivenih od modela.
+
+Ako je predikcija kao element s najvećom vjerojatnošću rezultat vratila identitet korisnika koji je u pitanju, tada će to značiti da je korisnik uspješno autentificiran i bit će odveden na web stranicu prikazanu na slici ispod.
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{slike/app_welcome.png}
+    \captionof{figure}{Poruka na web stranici nakon uspješne autentifikacije (vlastita izrada)}
+    \label{fig:app-welcome}
+\end{center}
+
+Ako korisnik nije prethodno registriran, tada će se morati registrirati kako bi pristupio aplikaciji. Kada odabere opciju za registriranje, tada će mu se prikazati web stranica sa obrascem prikazanim na slici ispod.
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{slike/app_register.png}
+    \captionof{figure}{Obrazac za registraciju (vlastita izrada)}
+    \label{fig:app-register}
+\end{center}
+
+Kada korisnik unese svoje podatke za registraciju i pritisne gumb „Register“, tada će se zabilježiti njegovi podaci i predstaviti će mu se web stranica prikazana na slici ispod.
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{slike/app_tipkanje.png}
+    \captionof{figure}{Obrazac za prikupljanje podataka o dinamici tipkanja korisnika (vlastita izrada)}
+    \label{fig:app-tipkanje}
+\end{center}
+
+Ovdje korisnik mora unijeti traženu frazu za potrebu prikupljanja podataka o njegovoj dinamici tipkanja, koja će se kasnije koristiti za dodatnu autentifikaciju. Od korisnika se zahtijeva da minimalno 10 puta uspješno podnese podatke o dinamici tipkanja kako bi se modelu pružio što veći broj podataka te samim time povećala preciznost njegove predikcije. Kada je broj uspješnih podnošenja dosegao vrijednost od 10 ili više, tada korisnik može završiti s ovom aktivnošću i pritisnuti gumb „Finish“. Korisnik će tada biti prebačen na web stranicu prijave u sustav.
+
+Pritiskom na gumb „Submit Data“, poslat će se POST zahtjev na endpoint za bilježenje podataka o dinamici tipkanja korisnika. Kod u nastavku prikazuje prethodno spomenuti endpoint.
+
+\begin{longlisting}
+\begin{minted}{python}
+@keystrokes.route('/keystrokes', methods=['GET', 'POST'])
+def show():
+    if request.method == 'POST':
+        keystrokes = request.json['keystrokes']
+        subject = request.json['subject']
+
+        dict1 = {}
+        dict1['subject'] = subject
+        dict1['sessionIndex'] = 0
+        dict1['rep'] = 0
+        for i in range(len(keystrokes)):
+            key_name = "H." + keystrokes[i]['key']
+            hold_time = (keystrokes[i]['upTime'] - keystrokes[i]['downTime']) / 1000
+            dict1[key_name] = hold_time
+
+            if i < len(keystrokes) - 1:
+                next_key = i + 1
+
+                dd_key_name = "DD." + keystrokes[i]['key'] + "." + keystrokes[next_key]['key']
+                down_down_time = (keystrokes[next_key]['downTime'] - keystrokes[i]['downTime']) / 1000
+                dict1[dd_key_name] = down_down_time
+
+                ud_key_name = "UD." + keystrokes[i]['key'] + "." + keystrokes[next_key]['key']
+                up_down_time = (keystrokes[next_key]['downTime'] - keystrokes[i]['upTime']) / 1000
+                dict1[ud_key_name] = up_down_time
+
+        file_path = 'key_dataset.csv'
+
+        file_exists = os.path.isfile(file_path)
+
+        with open(file_path, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=dict1.keys())
+
+            if not file_exists:
+                writer.writeheader()
+
+            writer.writerow(dict1)
+
+        return jsonify(dict1)
+    else:
+        return render_template('keystroke.html')
+\end{minted}
+\caption{Python kod za endpoint /keystrokes}
+\label{lst:python_tipkanje}
+\end{longlisting}
+
+Prvo se vrši obrada podataka o pritiscima na tipke, koja je identična kao i u slučaju endpointa za autentifikaciju korisnika pomoću dinamike tipkanja. Nakon obrade i izračuna, podaci se upisuju u pripadajuću .csv datoteku. Odgovor čini JSON oblik podataka dobivenih obradom. 
+
+Ako se na samom početku rada unutar aplikacije odabere opcija „Model“, tada će korisniku biti prikazana web stranica koja trenutno nudi samo jednu mogućnost, a to je treniranje modela. Odabirom te mogućnosti, šalje se GET zahtjev na endpoint prikazan u sljedećem isječku programskog koda.
+
+\begin{longlisting}
+\begin{minted}{python}
+@rfmodel.route('/train', methods=['GET'])
+def train():
+    file = request.args.get('file')
+    dataset = pd.read_csv("./" + file + ".csv")
+    
+    if 'sessionIndex' in dataset.columns and 'rep' in dataset.columns:
+        dataset.drop(['sessionIndex', 'rep'], axis=1, inplace=True)
+
+    X_train, X_test, y_train, y_test = [], [], [], []
+    subjects = dataset['subject'].unique()
+    for subject in subjects:
+        subject_dataset = dataset[dataset['subject'] == subject]
+        train_data, test_data = train_test_split(subject_dataset, test_size=0.2)
+        
+        X_train.append(train_data.iloc[:, 1:])
+        X_test.append(test_data.iloc[:, 1:])
+        y_train.extend(train_data['subject'])
+        y_test.extend(test_data['subject'])
+
+    X_train = pd.concat(X_train, axis=0)
+    X_test = pd.concat(X_test, axis=0)
+    y_train = pd.Series(y_train)
+    y_test = pd.Series(y_test)
+
+    ss = StandardScaler()
+    ss.fit(X_train)
+    X_train = ss.transform(X_train)
+    X_test = ss.transform(X_test)
+
+    best_model = RandomForestClassifier(n_estimators = 339, max_depth = 18)
+    best_model.fit(X_train, y_train.values.ravel())
+    joblib.dump(best_model, 'best_model.pkl')
+    joblib.dump(ss, 'scaler.pkl')
+
+    y_pred = best_model.predict(X_test)
+
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='weighted')
+
+    results = {
+        'accuracy': accuracy,
+        'precision': precision
+    }
+    return jsonify(results)
+\end{minted}
+\caption{Python kod za endpoint /train}
+\label{lst:python_train}
+\end{longlisting}
+
+Pomoću request.args.get('file') dohvaća se ime datoteke iz zahtjeva, zatim se čita ta datoteka. Uklanjaju se stupci „sessionIndex“ i „rep“. Podaci se dijele na trening i testne skupove. Podaci za svaki subjekt se razdvajaju, pri čemu se 80\% podataka koristi za trening, a 20\% za testiranje. Podaci se standardiziraju koristeći StandardScaler, a zatim se podaci i ciljevi pripremaju za treniranje modela. Algoritam RandomForestClassifier se inicijalizira s odabranim parametrima, trenira na trening podacima i pohranjuje kao 'best\_model.pkl'. Također se pohranjuje objekt StandardScaler kao 'scaler.pkl'. Model se testira na testnim podacima i izračunava se točnost i preciznost predikcije. Rezultati se vraćaju kao JSON odgovor. Na slici ispod prikazani su rezultati predikcije od strane modela.
+
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{slike/app_model_rezultati.png}
+    \captionof{figure}{Rezultati treniranja modela (vlastita izrada)}
+    \label{fig:app-model-rezultati}
+\end{center}
 
 \makebackmatter
 
