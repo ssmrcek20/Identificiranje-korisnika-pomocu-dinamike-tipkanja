@@ -71,7 +71,7 @@ Kod procesa identifikacije koriste se dvije vrste tekstova: oni s definiranim br
     \label{fig:slika-kar-vremena}
 \end{figure}
 
-\chapter{Skup podataka dinamičkog tipkanja}
+\chapter{Skup podataka dinamike tipkanja}
 Postoji nekoliko skupova podatka za dinamiku tipkanja koje se često koriste u radovima. To su: Buffalo, Clarkson II, KeyRecs i DSN-2009.
 
 \section{DSN-2009}
@@ -360,7 +360,7 @@ def predict_user():
 \label{lst:python_predict}
 \end{listing}
 
-Prvo se provjerava postojanost modela i skalera, a ukoliko ne postoje prekida se daljnja aktivnost. Ako postoje, tada se učitavaju. Podaci se zatim čitaju iz zahtjeva, iz JSON oblika pretvaraju u DataFrame i uklanja se stupac 'subject'. Zatim se filtriraju podaci tako da ostaju samo oni stupci koji su definirani u listi 'expected\_order'. Sljedeće je skaliranje te vršenje predikcije od strane modela na temelju skaliranih podataka. Odgovor čini lista predikcija dobivenih od modela.
+Prvo se provjerava postojanost modela i skalera, a ukoliko ne postoje prekida se daljnja aktivnost. Ako postoje, tada se učitavaju. Podaci se zatim čitaju iz zahtjeva, iz JSON oblika pretvaraju u DataFrame i uklanja se stupac 'subject'. Zatim se podaci razmještaju na određene stupce koji su definirani u listi 'expected\_order'. Sljedeće je skaliranje te vršenje predikcije od strane modela na temelju skaliranih podataka. Odgovor čini predikcija dobivena od modela.
 
 Ako je predikcija kao element s najvećom vjerojatnošću rezultat vratila identitet korisnika koji je u pitanju, tada će to značiti da je korisnik uspješno autentificiran i bit će odveden na web stranicu prikazanu na slici ispod.
 
@@ -503,11 +503,10 @@ Pomoću request.args.get('file') dohvaća se ime datoteke iz zahtjeva, zatim se 
 
 \chapter{Zaključak}
 
-Ovaj rad je teorijski obradio dinamičko tipkanje kao biometrijsku karakteristiku te metode dubokog i klasičnog strojnog učenja koji se mogu koristiti za analizu dinamičkog tipkanja. Osim toga rad je istražio i opisao razne skupove podatak dinamike tipkanja. Nakon tog istraživanja napravljen je model korištenjem random forest metode i zapisana su opažanja najboljih parametara i skupa podataka za njega. Da bi se pokazala korist ovoga modela napravljena je web aplikacija koja koristi napravljeni model za dvofaktorsku autentifikaciju dinamike tipkanja s korisničkim imenom i lozinkom. Cijeli taj proces izrade i način rada je opisan u radu. 
+Ovaj rad je teorijski obradio dinamiku tipkanja kao biometrijsku karakteristiku te metode dubokog i klasičnog strojnog učenja koji se mogu koristiti za analizu dinamike tipkanja. Osim toga rad je istražio i opisao razne skupove podataka dinamike tipkanja. Nakon tog istraživanja napravljen je model korištenjem random forest metode i zapisana su opažanja najboljih parametara i skupa podataka za njega. Da bi se pokazala korist ovoga modela napravljena je web aplikacija koja koristi napravljeni model za dvofaktorsku autentifikaciju korisnika koja koristit dinamiku tipkanja s korisničkim imenom i lozinkom. Cijeli taj proces izrade i način rada je opisan u radu. 
 
-Preciznost i točnost našeg modela koji je dobiven sa metodom random forest je između 92 i 94 posto što je dobar rezultat i ovim radom je pokazano da se dinamika tipkanja može koristit za autetifikaciju korisnika. 
+Preciznost i točnost našeg modela koji je dobiven sa metodom random forest je između 92 i 94 posto što je dobar rezultat i ovim radom je pokazano da se dinamika tipkanja može koristit kao dodatni faktor kod autentifikacije korisnika u realnom sustavu. 
 
-možda dodaj da slični radovi imaju slične rezultate za random forest ali ak se korsit CNN onda se mogu dobiti bolji rezultati oko 97 posto ali mi nismo probali CNN jer je dosta kompleksniji i intezivniji za računalne resurse???
 
 
 \makebackmatter
