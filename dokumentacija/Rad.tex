@@ -1,76 +1,37 @@
 \documentclass[]{foi} 
-% zakomentirati za pisanje rada na engleskom jeziku
-% comment the above line if writing in English
-
-% \documentclass[english]{foi} 
-% odkomentirati za pisanje rada na engleskom jeziku
-% uncomment the above line if writing in English
 
 \usepackage[utf8]{inputenc}
 \usepackage{lipsum}
 
 \vrstaRada{\projekt}
-% \zavrsni ili \diplomski ili \seminar ili \projekt
-% type of the paper:
-% \seminar is a seminar/term paper
-% \projekt is a project
 
-\title{Naslov rada -- \LaTeX\ Predložak}
-\predmet{\predmetVAS}
-% ostaviti prazno ako \vrstaRada nije \projekt ili \seminar
-% \predmetBP ili \predmetDP ili \predmetTBP ili \predmetVAS ili \predmetUUI
-% leave it empty if \vrstaRada is not a \projekt or \seminar
-% \predmetBP - Databases 1
-% \predmetVAS - Multiagent Systems
+\title{Identificiranje korisnika pomoću dinamike tipkanja}
+\predmet{\predmetSI}
 
-\author{Barica} 
-% ime i prezime studenta/studentice
-% name and surname of the author
-\spolStudenta{\zensko} 
-% \zensko ili \musko
-% student's gender for grammar purposes: \zensko = F or \musko = M
+\author{Karlo Vardijan, Lovro Pejaković, Filip Šoštarić, Stanko Smrček} 
+
+\spolStudenta{\musko} 
 
 \mentor{Bogdan Okreša Đurić}
-% ime i prezime mentora
-% name and surname of the mentor
 \spolMentora{\musko} 
-% \zensko ili \musko
-% mentor's gender: \zensko = F or \musko = M
 \titulaProfesora{dr. sc.}
-% HR: dr. sc.  / doc. dr. sc. / izv. prof. dr. sc. / prof. dr. sc. 
-% mentor's title:
-% EN: -prazno- / Asst. Prof.  / Assoc. Prof.       / Full Prof.
 
-\godina{2023}
-\mjesec{rujan}
-% mjesec obrane rada ili projekta
-% year and month of the presentation of the project or paper
+\godina{2024}
+\mjesec{ožujak}
 
-\indeks{35918/07–R}
-% broj indeksa ili JMBAG
-% author's ID
+\indeks{0016147086, 0016150223, 0016149647, 0016149535}
 
-\smjer{Informacijski i poslovni sustavi}
-% (ili:
-%     Informacijski sustavi, 
-%     Poslovni sustavi, 
-%     Ekonomika poduzetništva, 
-%     Primjena informacijske tehnologije u poslovanju, 
-%     Informacijsko i programsko inženjerstvo, 
-%     Baze podataka i baze znanja, 
-%     Organizacija poslovnih sustava, 
-%     Informatika u obrazovanju
-% )
-% study programme; please enter "Erasmus" for incoming exchange students
+\smjer{Informacijsko i programsko inženjerstvo}
 
 
-\sazetak{Opsega od 100 do 300 riječi. Sažetak upućuje na temu rada, ukratko se iznosi čime se rad bavi, teorijsko-metodološka polazišta, glavne teze i smjer rada te zaključci.}
+\sazetak{Dinamika tipkanja primjer je ponašajne biometrijske karakteristike koja se može koristiti u svrhu identifikacije i autentifikacije. Modernim algoritmima umjetne inteligencije, specifično strojnog i dubokog učenja, moguće je koristiti specifičnosti dinamike tipkanja korisnika u svrhu otkrivanja identiteta. Kroz praktični primjer demonstrirat će se način na koji identifikacija dinamikom tipkanja funkcionira te će se kroz analizu rezultata donijeti zaključak o korištenju spomenute biometrijske karakteristike u praksi.}
 % abstract of 100 to 300 words.
 
-\kljucneRijeci{riječ; riječ; ...riječ; Obuhvaća $7\pm2$ ključna pojma koji su glavni predmet rasprave u radu.}
+\kljucneRijeci{dinamika tipkanja, biometrija, identifikacija, umjetna inteligencija, strojno učenje}
 % keywords including 7 +/- 2 syntagms
 
 \acrodef{VAS}{višeagentni sustav}
+
 
 
 \begin{document}
@@ -86,249 +47,468 @@
 
 \chapter{Uvod}
 
-Završni ili diplomski rad studenta/studentice je konačni rezultat uloženog napora u završetak studija. Obranom završnog ili diplomskog rada student/studentica stječe prava i obveze koje proizlaze iz završetka akademskog obrazovanja. S ciljem osiguranja potpore studentima pri pisanju završnog/diplomskog rada, izrađen je ovaj predložak oblikovanja samog rada.
+Cilj ovog projekta je analizom dinamike tipkanja identificirati korisnika. U ovom radu opisat će se sama dinamika tipkanja kao biometrijska karakteristika, u kojim područjima se primjenjuje i karakteristične mjere koje pohranjujemo te pomoću kojih na kraju vršimo samo identifikaciju. Biti će spomenuti sigurnosni rizici vezani za uporabu dinamike tipkanja i algoritmi strojnog učenja koji se koriste kod identifikacije. Detaljnije će se opisati metoda odabrana za praktični dio projekta. Na kraju slijedi opis implementiranog sustava za identifikaciju korisnika pomoću dinamike tipkanja. Analizirat će se rezultati dobiveni korištenjem implementiranog rješenja te odabranog seta podataka u svrhu identifikacije.
 
-Načelna napomena o strukturi rada jest da se nazivi i struktura poglavlja obavezno definiraju u dogovoru s mentorom/mentoricom. Sadržajna preporuka je da u uvodu treba opisati što je tema završnog/diplomskog rada, zašto je tema značajna te koja je motivacija studenta/ studentice za odabir teme \cite{oraictolic2011AkademskoPismoStrategije}.
+\chapter{Dinamika tipkanja kao biometrijska karakteristika}
+Identifikacija je proces određivanja identiteta osobe bez prethodne deklaracije od strane osobe koju pokušavamo identificirati.\cite{Kasprowski2022} Identifikacija se može smatrati kao 1 naprema više veza jer iz nekog skupa korisnika pokušavamo odrediti kome pripadaju karakteristike pomoću kojih vršimo sam proces identifikacije. Značajke koje se koriste u biometriji se dijele na fizičke i ponašajne. Fizičke uključuju stvari poput otiska prsta i strukture lica dok ponašajne obuhvaćaju način hoda, glas, potpis te dinamiku tipkanja.\cite{Kasprowski2022}
 
+Za razliku od fizičkih karakteristika koje su unikatne od osobe do osobe, ponašajne karakteristike se mijenjaju tijekom vremena te nisu toliko pouzdane što se tiče sigurnosti. Ponašajne karakteristike su obično implementirane kao potpora fizičkim. Na ponašajne karakteristike utječu stvari poput emocionalnog stanja osobe, zdravstvenih uvjeta te uvjeta okoline. Gore navedene stvari su primjenjive na dinamiku tipkanja koja je fokus ovog projekta. Obje vrste karakteristika moraju ispunjavati uvjete koje biometrijske karakteristike trebaju imati. To su jedinstvnenost, univerzalnost, lakoća prikupljanja, nepromjenjivost i prihvatljivost.\cite{Kasprowski2022} Jedinstvenost kaže da bi karakteristika trebala biti jedinstvena za osobu tj. dvije osobe ne bi smjele imati identičnu mjeru neke značajke. Univerzalnost znači da bi sve osobe morale posjedovati tu značajku. Značajka bi trebala biti lako prikupljiva te se ne bi trebala mijenjati kroz vrijeme. Također mora biti korisničko prihvatljiva. Sama dinamika tipkanja nije jedinstvena jer je moguće da dvije osobe tipkaju na isti način jer je to ponašajna karakteristika. Osim toga još neki problemi dinamike tipkanja su da se dinamika tipkanja može mijenjati ako smo bolesni, umorni ili ako koristimo drugačiju tipkovnicu nego inače \cite{Chang2021}. 
 
+Osim ovih nedostataka dinamika tipkanja ima i prednosti naprema nekim drugim biometrijskim karakteristikama. Prednost je da ne trebamo specijalne alate za prikupljanje dinamike tipkanja već korisnik tipka kao i inače na svojoj tipkovnici, a pozadinski program skuplja podatke o tipkanju pa je zato dinamika tipkanja nenametljiva karakteristika \cite{Chang2021}. Nažalost to nije savršeno jer se ovisno o korištenoj tipkovnici može promijeniti dinamika tipkanja korisnika \cite{Granic2012}. Još jedan problem je da sam operacijski sustav i programski jezik programa može biti dosta neprecizan kada uzima vremena pritiska tipki te vremena će ovisiti o njima \cite{Granic2012}. Zbog toga postoje i sustavi koji koriste vanjski točniji mjerač vremena od onoga ugrađenog u sam operacijski sustav \cite{Granic2012}.
 
-\chapter{Metode i tehnike rada}
+Dobar potencijal za dinamiku tipkanja je kod autentifikacije s lozinkom u kojem dinamika tipkanja može biti drugi faktor koji se provjerava kako bi se bolje zaštitio račun korisnika jer čak ako napadač zna lozinku korisnika dinamiku tipkanja je teško lažirati. Isto tako potencijal za dinamiku tipkanja je da se nakon autentifikacije kontinuirano provjerava dinamika tipkanja korisnika i ako je drukčija nego inače može se otkriti napadač koji je uspio upasti u sustav korisnika.
 
-U ovom poglavlju treba opisati koje će metode i tehnike biti korištene pri razradi teme, kako su provedene istraživačke aktivnosti, koji su programski alati ili aplikacije korišteni.
+Prvi primjeri korištenja dinamike tipkanja u svrhu identifikacije pojavili su se tijekom 2. Svjetskog Rata kod slanja poruka Morsovim kodom. Način na koji je poruka otipkana mogla je dati uvid u legitimnost poruke \cite{Haring2007}. U tom smislu dinamika tipkanja je relativno nova biometrijska karakteristika koja još nije puno istražena i ne postoje puno sustava koji ih koriste. 
 
-\lipsum[1-2]
+Postojeća rješenja i implementacije bazirane su na statističkim podacima određenih događaja. Događaji koji se uglavnom koriste su duljine trajanja između pritiska i otpuštanja jedne tipke (eng. Dwell time), vrijeme koje protekne između otpuštanja jedne te pritiska druge tipke (eng. Interval), vrijeme između otpuštanja prve te otpuštanja druge tipke (eng. Up to up), vrijeme između pritiska prve tipke te pritiska druge (eng. Flight time), vrijeme između pritiska prve tipke te otpuštanja druge scenariji u kojima se koriste "Shift" i "Capslock" tipke za pisanje velikih slova i korištenje strelica za pozicioniranje u tekstu.\cite{Kasprowski2022} Manje korištene značajke uključuju i poziciju prsta na tipkama što zahtjeva korištenje kamere. Također se može promatrati i odabir prstiju koji se koristi za određene tipke za koje je također potrebna kamera. Druga klasifikacija obuhvaća metrike kao što su Down-down time, Up-down time, Up-up time te Down-up time koje jednostavno opisuju vremenski razmak između otpuštanja (Up) ili pritiska (Down) prve tipke te otpuštanja ili pritiska druge.
 
+Kod procesa identifikacije koriste se dvije vrste tekstova: oni s definiranim brojem znakova i oni s nasumično odabranom duljinom. Prva opcija je primjenjuje u većini istraživanja koja su povezana s dinamikom tipkanja. Fokus je stavljen na odabir odgovarajućih algoritma te njihovo poboljšanje. Drugi pristup se koristi za kontinuiranu autentifikaciju.\cite{Kasprowski2022} Podaci o dinamici tipkanja se obično prikupljaju tipkovnicom, no kako su pametni mobiteli u današnje vrijeme sveprisutni, moguće je i tako obaviti prikupljanje. Ovdje također možemo zabilježiti točne koordinate pritiska, veličinu ekrana koju prst prekriva kod određene tipke te jačinu pritiska.\cite{Lee2018}
 
-
-\chapter{Razrada teme}
-
-Ovo je glavni dio rada u kojem treba razraditi temu, pojasniti istraživanja, prikazati rezultate i slično. Poželjno je na početku poglavlja dati kratki opis strukture poglavlja, kako bi čitatelj/čitateljica rada mogao/mogla lakše pratiti složenu cjelinu.
-
-
-
-\section{Poglavlje druge razine }
-
-\lipsum[6]
-
-
-
-\subsection{Poglavlje treće razine}
-
-\lipsum[2]
-
-
-
-\subsection{Poglavlje četvrte razine}
-
-\lipsum[4-5]
-
-
-
-\chapter{Tehničke upute}
-
-Tehničke upute u nastavku opisuju način tehničkog oblikovanja rada i navođenja literature.
-
-
-
-\section{Upute za oblikovanje izgleda rada}
-
-\subsection{Oblikovanje stranice}
-
-\textbf{Stranice} su oblikovane korištenjem sljedećih parametara:
-
-\begin{itemize}
-    \item veličina i oblik papira je A4, okomito usmjerenje, margine 2,5 cm na svakoj strani;
-
-    \item naslovna stranica rada se ne numerira;
-
-    \item nakon naslovne stranice, sve sljedeće stranice do 1. Poglavlja se numeriraju rimskim brojevima, počevši od i;
-
-    \item od 1. poglavlja nadalje, stranice se numeriraju arapskim brojevima;
-
-    \item broj stranice treba pozicionirati desno 1,25 cm od dna stranice, font Arial 9.
-\end{itemize}
-
-\subsection{Tekst rada}
-
-\textbf{Tekst} rada je oblikovan na sljedeći način:
-\begin{itemize}
-    \item u pisanju teksta koristite font Arial 11 pt, s proredom 1,5 te razmakom 0 pt prije i razmakom 6 pt poslije odlomka, pri čemu je prvi redak uvučen za 1,25 cm;
-
-    \item u naslovima prve razine „3. Razrada teme“ koristite font Arial 18 pt, podebljano, prijelom stranice (svaki naslov prve razine treba biti na novoj stranici), s proredom 1,5 te razmakom 0 pt prije i razmakom 18 pt poslije odlomka;
-
-    \item u naslovima druge razine „2.1. Naslov“ koristite font Arial 16 pt, podebljano, s proredom 1,5 te razmakom 18 pt prije i razmakom 12 pt poslije odlomka;
-
-    \item u naslovima treće razine „2.1.1. Naslov“ koristite font Arial 14 pt, podebljano, s proredom 1,5 te razmakom 12 pt prije i razmakom 6 pt poslije odlomka;
-
-    \item u naslovima četvrte razine „2.1.1.1. Naslov“ koristite font Arial 12 pt, podebljano, s proredom 1,5 te razmakom 6 pt prije i razmakom 6 pt poslije odlomka;
-
-    \item ostalo značajno isticanje cjelina rada može biti istaknuto podebljanim i kurziv slovima, korištenjem fonta Arial 11 pt.
-\end{itemize}
-
-\subsection{Slike}
-
-\textbf{Slike} u radu je potrebno oblikovati na sljedeći način:
-
-\begin{itemize}
-    \item opis slike navedite ispod slike uz numeraciju;
-    
-    \item za nazive slika koristite iste postavke fonta kao i za tekst, ali stavite opis slike u centrirani položaj;
-
-    \item za oblikovanje same slike koristite font Arial 9 pt za tekst na slici;
-ispred same slike umetnite jedan prazan redak (osim ako je slika pozicionirana na početku stranice);
-
-    \item kod prijeloma stranice treba obratiti posebnu pozornost da opis slike, izvor i sama slika moraju biti na istoj stranici; 
-
-    \item slike je potrebno numerirati redom pojavljivanja u tekstu;
-
-    \item ako je slika preuzeta iz drugog izvora, nakon navođenja opisa slike je potrebno dodati i referencu izvornog djela;
-
-    \item dozvoljeno je napraviti vlastitu preradu slika, grafikona ili tablica na način da se zadrži isti smisao sadržaja, ali promijeni izgled, pri čemu je obavezno u opisu slike navesti referencu izvornog djela ovako: <opis slike> ; prema [X]
-
-    \item dozvoljeno je preuzeti samo jednu sliku, grafikon ili tablicu u izvornom obliku iz istog izvora. Za doslovno preuzimanje većeg dijela sadržaja potrebno je ishoditi dozvolu nositelja autorskih prava;
-
-    \item primjer označavanja slike prikazan je kod slike \ref{fig:podjela}.
-\end{itemize}
-
-\begin{figure}[]
+\begin{figure}[!h]
     \centering
-    \includegraphics[width=0.9\textwidth]{slike/slika.png}
-    \caption{Osnovni koncepti modela umjetnog agenta; preuzeto iz \cite{russell2022ArtificialIntelligenceModern}}
-    \label{fig:podjela}
+    \includegraphics[width=0.6\textwidth]{slike/karakteristike.jpeg}
+    \caption{Slika prikaza karakterističnih vremena dinamike tipkanja; preuzeto iz \cite{Rootstrap}}
+    \label{fig:slika-kar-vremena}
 \end{figure}
 
-\subsection{Tablice}
+\chapter{Skup podataka dinamike tipkanja}
+Postoji nekoliko skupova podatka za dinamiku tipkanja koje se često koriste u radovima. To su: Buffalo, Clarkson II, KeyRecs i DSN-2009.
 
-\textbf{Tablice} rada je potrebno oblikovati sukladno ovim uputama:
-\begin{itemize}
-    \item opis tablice navedite iznad slike;
+\section{DSN-2009}
 
-    \item za opise tablica koristite iste postavke fonta kao i za tekst, ali stavite opis tablice u centrirani položaj;
+Ovaj skup podataka je napravljen za članak "Comparing Anomaly-Detection Algorithms for Keystroke Dynamics,"  za DNS konferenciju 2009. od strane Kevin Killourhy i Roy Maxion \cite{DNS}. Skup podataka je dostupan na njihovoj stranici \cite{DNS} gdje je taj skup i ukratko opisan. Prema \cite{DNS} skup je dobiven od 51 sudionika koji su pisali istu lozinku 400 puta u 8 sesija. Lozinka koju su pisali je „.tie5Roanl“, ona je predstavljala snažnu lozinku od 10 znakova. Za prikupljanje tipkanja sudionika korišten je laptop s aplikacijom za pisanje lozinke te vanjski precizan mjerač vremena. Prilikom pisanja lozinke prikupljala su se vremena kada je tipka pritisnuta, kada je tipka puštena i koja je to tipka. Skup podataka se sastoji od 34 stupca te u svakom retku je zapisano tko je pisao, koja je sesija, koje ponavljanje i vremena za svaku tipku. Vremena su zabilježena u stupce: H.tipka koja predstavlja vrijeme držanja određene tipke, DD.tipka1.tipka2 koja predstavlja vrijeme od kad je pritisnuta prva tipka do kad je pritisnuta druga tipka i UD.tipka1.tipka2 koja predstavlja vrijeme od kad je prva tipka puštena do kad je druga tipka pritisnuta. Ta vremena se mogu vidjeti na slici \ref{fig:graf-vremena-tipkanja} te dio tablice se može vidjeti na \ref{tab:DNS-podaci}.
 
-    \item za oblikovanje same tablice koristite font Arial 9 pt za tekst u tablici;
-
-    \item tablice numerirajte redom pojavljivanja u tekstu;
-
-    \item kod prijeloma stranice treba obratiti posebnu pozornost da opis tablice, izvor i sama tablica moraju biti na istoj stranici; 
-
-    \item ako je tablica preuzeta iz drugog izvora, nakon navođenja opisa tablice potrebno je navesti izvor, na isti način kako je opisano kod slika;
-
-    \item primjer označavanja tablice možete vidjeti u nastavku (tablica \ref{tab:objekti}).
-\end{itemize}
-
-\begin{table}[h!] 
+\begin{table}[!h]
     \centering
-    \caption{Prikaz podataka o učestalosti pojavljivanja objekta; prema \cite{wooldridge2009IntroductionMultiAgentSystems}}
-    \begin{tabularx}{0.66\textwidth}{|X|X|X|X|}
-        \hline
-         \cellcolor{gray!25} & \cellcolor{gray!25} & \cellcolor{gray!25} & \cellcolor{gray!25} \\
-        \hline
-         &  &  &  \\
-        \hline
-         &  &  & \\
-        \hline
+    \caption{Dio podataka iz DNS-2009 skupa podataka; prema \cite{DNS}}
+    \begin{tabularx}{1\textwidth}{|l|l|l|l|l|l|l|l|l|l|}
+    \hline
+        \cellcolor{gray!25}subject & \cellcolor{gray!25}sessionIndex & \cellcolor{gray!25}rep & \cellcolor{gray!25}H.period & \cellcolor{gray!25}DD.period.t & \cellcolor{gray!25}UD.period.t & \cellcolor{gray!25}H.t & \cellcolor{gray!25}DD.t.i & \cellcolor{gray!25}... \\ \hline
+        s002 & 1 & 1 & 0.1491 & 0.3979 & 0.2488 & 0.1069 & 0.1674 & ... \\ \hline
+        s002 & 1 & 2 & 0.1111 & 0.3451 & 0.2340 & 0.0694 & 0.1283 & ... \\ \hline
+        s002 & 1 & 3 & 0.1328 & 0.2072 & 0.0744 & 0.0731 & 0.1291 & ... \\ \hline
+        ... & ... & ... & ... & ... & ... & ... & ... & ... \\ \hline
     \end{tabularx}
     \\[10pt]
-    \label{tab:objekti}
+    \label{tab:DNS-podaci}
 \end{table}
 
-\subsection{Programski kod}
+\section{KeyRecs}
+Ovaj skup podataka je dobiven od 99 sudionika koji su sudjelovali u dva zadatka  \cite{Dias2023}. Prvi zadatak je bio pisanje lozinke „vpwjkeurkb“ 200 puta kroz dvije sesija, a drugi zadatak je bio prepisivanje 10 odlomaka raznih literatura isto kroz dvije sesije \cite{Dias2023}. Ti zadaci su se provodili preko web stranice koja je bilježila razna vremena tijekom tipkanja \cite{Dias2023}. Vremena koja su se bilježila su: od pritiska tipke do puštanja tipke (DU), od pritiska tipke do pritiska druge tipke (DD), od puštanja tipke do pritiska druge tipke (UD), od puštanja tipke do puštanja druge tipke(UU), od pritiska tipke do puštanja druge tipke (DU) i ukupno vrijeme tipkanja \cite{Dias2023}. Ta vremena su dobro prikazana na slici \ref{fig:graf-vremena-tipkanja}. Osim tih vremena za svakoga korisnika su  zabilježene: godine, spol, nacionalnost i dominantna ruka  \cite{Dias2023}. Podaci za prvi zadatak pisanja lozinke su zapisani kao tablica \ref{tab:KeyRecs-podaci}. U svakom redu je zabilježeno: tko je pisao, koja je sesija, koje ponavljanje i vremena za svaku tipku šifre \cite{Dias2023}. Vremena su zabilježena u kolone (D|U).tipka1.tipka2 gdje prvi dio prikazuje određeno vrijeme na temelju slike \ref{fig:graf-vremena-tipkanja} a druga dva dijela na koju tipku se odnosi \cite{Dias2023}.
 
-Za oblikovanje teksta koji je programski kod korišten je font Courier, veličine 10 pt, jednostruki prored, 6 pt iza odlomka, npr. HTML kod dijela zaglavlja početne web stranice FOI weba je prikazan kao isječak koda \ref{lst:dva}.
+\begin{table}[!h]
+    \centering
+    \caption{Dio podataka iz KeyRecs skupa podataka; prema \cite{Dias2023}}
+    \begin{tabularx}{1\textwidth}{|l|l|l|l|l|l|l|l|l|l|}
+    \hline
+        \cellcolor{gray!25}participant & \cellcolor{gray!25}session & \cellcolor{gray!25}repetition & \cellcolor{gray!25}DU.v.v & \cellcolor{gray!25}DD.v.p & \cellcolor{gray!25}DU.v.p & \cellcolor{gray!25}UD.v.p & \cellcolor{gray!25}UU.v.p & \cellcolor{gray!25}DU.p.p & \cellcolor{gray!25}... \\ \hline
+        p001 & 1 & 1 & 0.129 & 1.917 & 1.804 & 2.046 & 1.933 & 0.113 & ... \\ \hline
+        p001 & 1 & 2 & 0.112 & 0.192 & 0.096 & 0.304 & 0.208 & 0.096 & ... \\ \hline
+        p001 & 1 & 3 & 0.088 & 0.253 & 0.182 & 0.341 & 0.27 & 0.071 & ... \\ \hline
+        ... & ... & ... & ... & ... & ... & ... & ... & ... & ... \\ \hline
+    \end{tabularx}
+    \\[10pt]
+    \label{tab:KeyRecs-podaci}
+\end{table}
+
+\section{Buffalo}
+Ovaj skup podataka je skupljen od istraživača u SUN Buffalo koji su ispitali 148 sudionika \cite{Free-Text}. Sudionici su pisali Steve Job govor u Stanfordu te odgovore na razna pitanja \cite{Free-Text}. Podaci su skupljeni na različitim tipkovnicama te skupljena su vremena pritiska i puštanja tipki \cite{Free-Text}.
+
+\section{Clarkson II}
+Ovaj skup podataka je skupljen od istraživača u Clarkson sveučilištu koji su ispitali 101 sudionika u korištenju tipkovnice tijekom 2 i pol godine \cite{Free-Text}. Sudionicu su svi koristili različite tipkovnice i radili različite stvari na računalu kad su skupljani njihovi podaci \cite{Free-Text}. Podaci koji su skupljeni su vremena pritiska i puštanja tipki \cite{Free-Text}.
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{slike/tipkanje-graf.jpg}
+    \caption{Grafikon bilježenih vremena tijekom tipkanja; preuzeto iz \cite{Dias2023}}
+    \label{fig:graf-vremena-tipkanja}
+\end{figure}
+
+
+
+\chapter{Metode analize dinamike tipkanja pomoću umjetne inteligencije}
+Umjetna inteligencija i strojno učenje prikladan su način za obradu velike količine podataka koje je potrebno obuhvatiti kako bi sa dosta velikom sigurnošću mogli autenticirati korisnika. Metode se mogu svrstati u dvije kategorije, metode klasičnog strojnog učenja i metode dubokog učenja.
+
+\section{Metode klasičnog strojnog učenja}
+Strojno učenje (engl. Machine learning) je grana umjetne inteligencije (engl. Artificial intelligence) čiji je fokus na korištenju podataka i algoritama na način da imitiraju kako ljudi uče, postepeno poboljšavajući svoje rezultate \cite{ibmcom}. 
+Algoritmi strojnog učenja organizirani su u sljedeće grupe: nadzirano učenje (engl. supervised learning), nenadzirano učenje (engl. unsupervised learning), polunadzirano učenje (engl. semi-supervised learning) i učenje s pojačanjem (engl. reinforcement learning). Dio podjele se može vidjeti na slici \ref{fig:machine-graf}.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{slike/machine.jpg}
+    \caption{Grafikon podjele strojnog učenja; preuzeto iz \cite{Machine}}
+    \label{fig:machine-graf}
+\end{figure}
+
+Nadzirano učenje je vrsta strojnog učenja dobila gdje je stroj "nadgledan" dok uči, što znači da se algoritmu daju informacije kako bi mu se pomoglo u učenju. Definiran je korištenjem označenih podataka (engl. Labeled Data). Označeni podaci skup su podataka koji sadrži puno primjera značajki (engl. Features) i mete (engl. Target). Nadzirano učenje koristi algoritme koji uče odnos značajki i mete iz skupa podataka. Taj se proces naziva obukom ili treniranjem. \cite{Coursera2023}
+Algoritmi za učenje bez nadzora ne koriste iste označene skupove za obuku i podatke. Umjesto toga, stroj traži manje očite uzorke u podacima. Strojno učenje bez nadzora korisno je kada treba identificirati obrasce i koristiti podatke za donošenje odluka. \cite{Coursera2023}
+Polunadzirano učenje je relativno nova i manje popularna vrsta strojnog učenja koja, tijekom obuke, spaja znatnu količinu neoznačenih podataka s malom količinom označenih podataka. Polunadzirano učenje je između nadziranog učenja (s označenim podacima o osposobljavanju) i nenadziranog učenja (neoznačeni podaci o osposobljavanju). \cite{Datacamp}
+Učenje s pojačanjem najbliža je vrsta strojnog učenja načinu na koji ljudi uče. Algoritam ili agent koji se koristi uči u interakciji sa svojom okolinom i dobivanjem pozitivne ili negativne nagrade. \cite{Coursera2023}
+
+\subsection{K-Nearest Neighbours}
+K-NN je neparametarski klasifikator s nadziranim učenjem. Moguće ga je koristiti za regresijski ili klasifikacijske probleme ali se tipično koristi kao klasifikacijski algoritam. Unutar klasifikacijskih problema on radi tako da se većinskim glasanjem odabire klasa koja je "najbliža" podacima danim za klasifikaciju. \cite{k-nearest}
+
+\subsection{Support Vector Machines}
+Support Vector Machines (SVM) je nadzirani algoritam učenja koji se obično koristi za zadatke klasifikacije i prediktivnog modeliranja. SVM algoritmi su popularni jer su pouzdani i mogu dobro raditi čak i s malom količinom podataka. SVM algoritmi rade stvaranjem granice odluke koja se naziva "hiperravnina". U dvodimenzionalnom prostoru, ova hiperravnina je poput linije koja razdvaja dva skupa označenih podataka. 
+Cilj SVM-a je pronaći najbolju moguću granicu odluke maksimiziranjem margine između dva skupa označenih podataka. Traži najširi jaz ili prostor između razreda. Svaka nova podatkovna točka koja padne s bilo koje strane ove granice odluke klasificirana je na temelju oznaka u skupu podataka za obuku. \cite{Coursera2024}
+
+\subsection{Random Forest}
+Random Forest algoritam je skup stabala odlučivanja koji se koriste za klasifikaciju i prediktivno modeliranje. Umjesto da se oslanja na jedno stablo odlučivanja, nasumična šuma kombinira predviđanja iz više stabala odluka kako bi napravila točnija predviđanja. U slučajnoj šumi, brojni algoritmi stabla odlučivanja (ponekad stotine ili čak tisuće) pojedinačno se treniraju pomoću različitih slučajnih uzoraka iz skupa podataka za obuku. Ova metoda uzorkovanja naziva se "slaganje u vrećice". Svako stablo odlučivanja trenira se neovisno na svom odgovarajućem slučajnom uzorku. 
+Jednom obučena, nasumična šuma uzima iste podatke i unosi ih u svako stablo odlučivanja. Svako stablo daje predviđanje, a nasumična šuma zbraja rezultate. Najčešće predviđanje među svim stablima odlučivanja zatim se odabire kao konačno predviđanje za skup podataka. \cite{Coursera2024}
+
+\section{Metode dubokog učenja}
+Sposobnost računala da obavljaju neke složene zadatke - prikupljanje podataka sa slike ili videa, na primjer - još uvijek je daleko ispod onoga za što su ljudi sposobni. Modeli dubokog učenja uvode iznimno sofisticiran pristup strojnom učenju i spremni su za rješavanje ovih izazova jer su posebno modelirani prema ljudskom mozgu. Aplikacije dubokog učenja koriste slojevitu strukturu algoritama koja se naziva umjetna neuronska mreža (ANN). Dizajn takvog ANN-a inspiriran je biološkom neuronskom mrežom ljudskog mozga, što dovodi do procesa učenja koji je mnogo sposobniji od standardnih modela strojnog učenja. \cite{Wolfewicz} Postoji više načina dubokog učenja koji su prikazani na slici \ref{fig:deep-graf} te neki će biti i objašnjeni u nastavku.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{slike/deep.jpg}
+    \caption{Vrste dubokog učenja; preuzeto iz \cite{Deep}}
+    \label{fig:deep-graf}
+\end{figure}
+
+\subsection{Convolutional Neural Networks}
+Konvolucijska neuronska mreža (CNN) vrsta je algoritma dubokog učenja koji je posebno prikladan za zadatke prepoznavanja i obrade slika. Sastoji se od više slojeva, uključujući konvolucijske slojeve, slojeve za udruživanje i potpuno povezane slojeve. 
+Konvolucijski slojevi ključna su komponenta CNN-a, gdje se filtri primjenjuju na ulaznu sliku kako bi se izdvojile značajke kao što su rubovi, teksture i oblici. Izlaz konvolucijskih slojeva zatim prolazi kroz skupne slojeve, koji se koriste za smanjivanje uzorkovanja mapa značajki, smanjujući prostorne dimenzije uz zadržavanje najvažnijih informacija. Izlaz slojeva udruživanja zatim prolazi kroz jedan ili više potpuno povezanih slojeva, koji se koriste za predviđanje ili klasificiranje slike. 
+CNN-ovi se obučavaju pomoću velikog skupa podataka označenih slika, gdje mreža uči prepoznati obrasce i značajke koje su povezane s određenim objektima ili klasama. Jednom obučen, CNN se može koristiti za klasificiranje novih slika ili izdvajanje značajki za korištenje u drugim aplikacijama kao što je detekcija objekata ili segmentacija slike. \cite{GeeksforGeeks2020}
+
+\subsection{Recurrent Neural Networks}
+Rekurentna neuronska mreža (RNN) vrsta je umjetne neuronske mreže koja koristi sekvencijalne podatke ili podatke vremenskih serija. Zbog svoje unutarnje memorije, RNN-ovi mogu zapamtiti važne stvari o ulazu koji su primili, što im omogućuje da budu vrlo precizni u predviđanju onoga što slijedi. Zbog toga su preferirani algoritam za sekvencijalne podatke kao što su vremenske serije, govor, tekst, financijski podaci, audio, video, vremenska prognoza i sl. Rekurentne neuronske mreže mogu stvoriti mnogo dublje razumijevanje niza/sekvence i njegovog konteksta u usporedbi s drugim algoritmima. \cite{Donges}
+
+\subsection{Multilayer Perceptrons}
+MLP je umjetna neuronska mreža koja se sastoji od više slojeva međusobno spojenih čvorova. Imaju isti broj ulaznih i izlaznih slojeva, a između njih mogu imati više skrivenih slojeva. 
+MLP-ovi unose podatke u ulazni sloj mreže. Zatim se slojevi neurona povezuju u graf tako da signal prolazi u jednom smjeru. Izračunavaju ulaz s težinama koje postoje između ulaznog sloja i skrivenih slojeva. Koriste aktivacijske funkcije kako bi odredili koje čvorove aktivirati. Aktivacijske funkcije uključuju ReLU, sigmoidne funkcije i tanh. MLP-ovi obučavaju model kako bi razumjeli korelaciju i naučili ovisnosti između neovisnih i ciljnih varijabli iz skupa podataka za obuku. \cite{Simplilearn}
+
+
+\chapter{Korišteni model i rezultat}
+Metode koje se često koriste u sličnim radovima za dinamiku tipkanja su Convolutional neural network, random forest i support vector machines koje smo sve opisali u 4. poglavlju. Mi smo probali koristit SVM i random forest. Metode su davale slične rezultate preciznosti ali random forest je bio puno brži pa smo se odlučili na korištenje njega za ovaj rad. Prvo smo testirali model na raznim parametrima kako bi dobili najbolje koji su bili oko 340 stabla i maksimalna dubina tih stabla 18, isječak koda \ref{lst:python_para}. Kada bi povećali broj stabla i dubinu od ovih dobivenih, rezultat ne bi bio znatno bolji, ali bi se vrijeme treniranja znatno povećalo.
 
 \begin{listing}
-    \begin{minted}{xml}
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="shortcut icon" href="https://www.foi.unizg.hr/sites/default/files/favicon_0_1.ico" type="image/vnd.microsoft.icon" />
-  <meta name="generator" content="Drupal 7 (http://drupal.org)" />
-  <link rel="canonical" href="https://www.foi.unizg.hr/hr" />
-  <link rel="shortlink" href="https://www.foi.unizg.hr/hr" />
-  <!-- Set the viewport width to device width for mobile -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dobro %*došli*) na FOI | FOI</title>...
-</head>
-    \end{minted}
-    \caption{Primjer isječka koda}
-    \label{lst:dva}
+\begin{minted}{python}
+    param_distributions = {'n_estimators': randint(50,500), 'max_depth': randint(5,20)}
+    rand_search = RandomizedSearchCV(RandomForestClassifier(), param_distributions = param_distributions, n_iter=5, cv=5)
+    rand_search.fit(X_train, y_train.values.ravel())
+
+    best_model = rand_search.best_estimator_
+    print('Najbolji parametri:',  rand_search.best_params_)
+\end{minted}
+\caption{Python kod za dobivanje najboljih parametara za random forest.}
+\label{lst:python_para}
 \end{listing}
 
-U slučaju preuzetog programskog koda, za isti je nužno potrebno naznačiti izvor, kao u isječku koda \ref{lst:kod2}. 
+Skup podataka koji smo probali koristit je KeyRecs i DSN-2009. Oba skupa su imala oko 2000 podataka, ali KeyRecs je imao više različitih vremena koja je bilježio za tipkanje. Prvotno smo mislili da će KeyRecs biti bolji zbog toga, ali se je pokazao da smo dobivali dosta bolje rezultate s skupom DSN-2009. Vjerujemo da su bolji rezultati bili s DSN-2009 zbog točnijeg načina mjerenja vremena tipkanja i korištenja iste tipkovnice. DSN je koristio vanjski točan mjerač vremena i uvijek istu tipkovnicu dok je KeyRecs mjerio vrijeme samo preko web aplikacije i koristile su se razne tipkovnice za skupljanje podataka. Više o tim skupovima je opisano u 3. poglavlju.
 
-Ponekad palatali mogu stvarati probleme u opisima isječaka koda, pa ih je potrebno zamijeniti \LaTeX\ kodovima: \v{c}/\v{s}/\v{z}: \mintinline{text}{\v{c/s/z}}, \'{c}: \mintinline{text}{\'{c}}, \dj: \mintinline{text}{\dj}.
+Rezultate koje smo dobili su dobri. Preciznost i točnost modela je između 92 i 94 posto što se poklapa s rezultatima sličnih istraživanja. Točnost se računa kao omjer broja točnih predikcija modela s ukupnim brojem predikcija dok se preciznost računa kao omjer broja pravih pozitivnih rezultata sa zbrojem pravih pozitivnih rezultat i lažnih pozitivnih rezultata.
+
+Dobiveni model je ugrađen u web aplikaciju koja može trenirati i testirati model na DSN-2009 skupu podataka. Osim toga aplikacija može zapisivati našu dinamiku tipkanja i na temelju toga trenirati model za kasniju autentifikaciju. Više o tome u sljedećem poglavlju.
+
+
+
+\chapter{Web aplikacija}
+Sa ciljem prikaza uporabe modela u mogućem stvarnom kontekstu, razvijena je jednostavna web aplikacija. Za razvoj ove aplikacije korišten je programski jezik python te programski okvir Flask. Aplikacija nudi osnovne funkcionalnosti prijave, registracije, odjave, a uz to i dvofaktorsku autentifikaciju, čiji drugi faktor podrazumijeva korištenje biometrijske karakteristike dinamike tipkanja korisnika. 
+
+U nastavku će biti prikazane funkcionalnosti aplikacije te ključni dijelovi programskog koda pomoću kojih je realizirana svaka od tih funkcionalnosti.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{slike/app_pocetna.png}
+    \caption{Početna stranica web aplikacije (vlastita izrada)}
+    \label{fig:app-pocetna}
+\end{figure}
+
+Kada korisnik pristupi aplikaciji, nudi mu se izbor kao na slici gore. Ako korisnik želi pristupiti „pravoj“ aplikaciji, tada odabire opciju „Application“. U drugom slučaju, ako korisnik želi pristupiti mogućnostima rada sa modelom, tada odabire opciju „Model“.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{slike/app_login.png}
+    \caption{Login obrazac (vlastita izrada)}
+    \label{fig:app-login}
+\end{figure}
+
+Odabirom opcije „Application“ korisniku se prikaže web stranica za prijavu u sustav. Nakon što korisnik unese ispravne podatke, tj. korisničko ime i lozinku postojećeg korisnika, tada će se prikazati web stranica sa obrascem kao na slici dolje.
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{slike/app_tipkanje_login.png}
+    \captionof{figure}{Obrazac za autentifikaciju dinamikom tipkanja (vlastita izrada)}
+    \label{fig:app-tipkanje-login}
+\end{center}
+
+
+Na ovoj web stranici implementirana je funkcionalnost prikupljanja biometrijske karakteristike dinamike tipkanja. Ovdje korisnik mora unijeti (utipkati) traženu frazu, koja glasi „.tie5Roanl“. Ova fraza je odabrana iz razloga što je korištena u skupu podataka koji je prvobitno korišten za treniranje i testiranje modela. To rezultira time da imamo identične stupce unutar .csv datoteke koja predstavlja skup podataka za treniranje modela.
 
 
 \begin{listing}
-    \begin{minted}{python}
-print("Ovo je preuzeti dio koda")
-    \end{minted}
-    \caption[Ovo je primjer koda koji je preuzet]{Ovo je primjer koda koji je preuzet iz \cite[str. 23]{russell2022ArtificialIntelligenceModern}}
-    \label{lst:kod2}
+\begin{minted}{javascript}
+function recordKeyDown(event) {
+    const ignoreKeys = ['Backspace', 'Shift', 'CapsLock', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 
+    'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    if (!ignoreKeys.includes(event.key)) {
+        let record = keystrokes.find(k => k.key === event.key && k.upTime === undefined);
+        if (!record) {
+            keystrokes.push({
+                key: event.key,
+                downTime: event.timeStamp,
+                upTime: undefined
+            });
+        }
+    }
+}
+
+
+function recordKeyUp(event) {
+    const ignoreKeys = ['Backspace', 'Shift', 'CapsLock', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 
+    'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    if (!ignoreKeys.includes(event.key)) {
+        let record = keystrokes.find(k => k.key === event.key && k.upTime === undefined);
+        if (record) {
+            record.upTime = event.timeStamp;
+            console.log('Key: ${record.key}, Down Time: ${record.downTime}, Up Time: ${record.upTime}');
+        }
+    }
+}
+\end{minted}
+\caption{JavaScript funkcije za bilježenje pritisnutih tipki}
+\label{lst:javascript}
 \end{listing}
 
 
+Prikazane su dvije funkcije, recordKeyDown() i recordKeyUp(). Prva funkcija aktivira se na svaki pritisak tipke prilikom unosa tražene fraze, a druga prilikom otpuštanja iste tipke. U obje funkcije definirane su tipke koje treba ignorirati prilikom bilježenja. Prva funkcija provjerit će postojanje zapisa određene tipke i ako ona ne postoji, tada će zapisati tipku. Druga funkcija provjerit će istu stvar te u slučaju ako postoji zapis, ažurira njegov „UpTime“, tj. vrijeme otpuštanja te tipke.
 
-\subsection{Formule}
+Ako korisnik unese ispravnu frazu i pristisne gumb „Submit Data“, tada će se poslati zahtjev na endpoint poslužitelja definiranog u kodu ispod, a koji služi za autentifikaciju korisnika na temelju dinamike tipkanja.
 
-Za unos formula koristite editor za formule. Matematičke izraze moguće je pisati unutar teksta $E = mc^2$ ili izdvojeno:
+\begin{listing}
+\begin{minted}{python}
+@keystrokeLogin.route('/keystrokeLogin', methods=['GET', 'POST'])
+def show():
+    if request.method == 'POST':
+        keystrokes = request.json['keystrokes']
+        subject = request.json['subject']
+
+        dict1 = {}
+        dict1['subject'] = subject
+        for i in range(len(keystrokes)):
+            key = keystrokes[i]['key']
+            key = key.replace('5', 'five').replace('R', 'Shift.r')
+
+            key_name = "H." + keystrokes[i]['key']
+            hold_time = (keystrokes[i]['upTime'] - keystrokes[i]['downTime']) / 1000
+            dict1[key_name] = hold_time
+
+            if i < len(keystrokes) - 1:
+                next_key = i + 1
+
+                dd_key_name = "DD." + keystrokes[i]['key'] + "." + keystrokes[next_key]['key']
+                down_down_time = (keystrokes[next_key]['downTime'] - keystrokes[i]['downTime']) / 1000
+                dict1[dd_key_name] = down_down_time
+
+                ud_key_name = "UD." + keystrokes[i]['key'] + "." + keystrokes[next_key]['key']
+                up_down_time = (keystrokes[next_key]['downTime'] - keystrokes[i]['upTime']) / 1000
+                dict1[ud_key_name] = up_down_time
+
+        dict1['DD.l.Return'] = 0
+        dict1['UD.l.Return'] = 0
+        dict1['H.Return'] = 0
+
+        json_object = json.dumps(dict1) 
+        response = requests.post('http://localhost:3000/predict', json=json_object)
+
+        return response.json()
+    else:
+        return render_template('keystrokeLogin.html')
+\end{minted}
+\caption{Python kod za endpoint /keystrokeLogin}
+\label{lst:python_tipkanje_login}
+\end{listing}
+
+Prvo se čitaju dobiveni podaci o pritiscima tipki, ti se podaci zatim obrađuju i vrše se izračuni. Izračuni podrazumijevaju računanje vremena držanja pojedine tipke, koja se dobiva kao razlika vremena otpuštanja i vremena pritiska tipke. Računa se i razlika vremena između pritiska sljedeće tipke u odnosu na trenutnu (down-down, DD) te razlika vremena između pritiska sljedeće tipke i otpuštanja trenutne tipke (up-down, UD). 
+
+Nakon što se na taj način obradi svaka tipka, tj. zabilježeni pritisak tipke, poslat će se zahtjev na endpoint za predikciju od strane modela, i kao odgovor će se vratiti JSON oblik onog odgovora koji se dobije predikcijom od strane modela.
+
+Kod u nastavku prikazuje prethodno spomenuti endpoint za predikciju od strane modela.
+
+\begin{listing}
+\begin{minted}{python}
+@rfmodel.route('/predict', methods=['POST'])
+def predict_user():
+    if not os.path.exists('best_model.pkl') or not os.path.exists('scaler.pkl'):
+        return jsonify({'error': 'Model not trained yet!'}), 400
+
+    model = joblib.load('best_model.pkl')
+    scaler = joblib.load('scaler.pkl')
+
+    expected_order = [
+        "H.period", "DD.period.t", "UD.period.t", 
+        "H.t", "DD.t.i", "UD.t.i", "H.i", "DD.i.e", "UD.i.e", "H.e", "DD.e.five", 
+        "UD.e.five", "H.five", "DD.five.Shift.r", "UD.five.Shift.r", "H.Shift.r", 
+        "DD.Shift.r.o", "UD.Shift.r.o", "H.o", "DD.o.a", "UD.o.a", "H.a", "DD.a.n", 
+        "UD.a.n", "H.n", "DD.n.l", "UD.n.l", "H.l", "DD.l.Return", "UD.l.Return", 
+        "H.Return"
+    ]
+
+    input_json = request.get_json(force=True) 
+    data_df = pd.read_json(input_json, typ='series')
+    data = data_df.drop('subject')
+    data_t = data.to_frame().T
+    data_t = data_t[expected_order]
+    data_scaled = scaler.transform(data_t)
+
+    predictions = model.predict(data_scaled)
+    print(predictions)
+    return jsonify({'predictions': predictions.tolist()})
+\end{minted}
+\caption{Python kod za endpoint /predict}
+\label{lst:python_predict}
+\end{listing}
+
+Prvo se provjerava postojanost modela i skalera, a ukoliko ne postoje prekida se daljnja aktivnost. Ako postoje, tada se učitavaju. Podaci se zatim čitaju iz zahtjeva, iz JSON oblika pretvaraju u DataFrame i uklanja se stupac 'subject'. Zatim se podaci razmještaju na određene stupce koji su definirani u listi 'expected\_order'. Sljedeće je skaliranje te vršenje predikcije od strane modela na temelju skaliranih podataka. Odgovor čini predikcija dobivena od modela.
+
+Ako je predikcija kao element s najvećom vjerojatnošću rezultat vratila identitet korisnika koji je u pitanju, tada će to značiti da je korisnik uspješno autentificiran i bit će odveden na web stranicu prikazanu na slici ispod.
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{slike/app_welcome.png}
+    \captionof{figure}{Poruka na web stranici nakon uspješne autentifikacije (vlastita izrada)}
+    \label{fig:app-welcome}
+\end{center}
+
+Ako korisnik nije prethodno registriran, tada će se morati registrirati kako bi pristupio aplikaciji. Kada odabere opciju za registriranje, tada će mu se prikazati web stranica sa obrascem prikazanim na slici ispod.
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{slike/app_register.png}
+    \captionof{figure}{Obrazac za registraciju (vlastita izrada)}
+    \label{fig:app-register}
+\end{center}
+
+Kada korisnik unese svoje podatke za registraciju i pritisne gumb „Register“, tada će se zabilježiti njegovi podaci i predstaviti će mu se web stranica prikazana na slici ispod.
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{slike/app_tipkanje.png}
+    \captionof{figure}{Obrazac za prikupljanje podataka o dinamici tipkanja korisnika (vlastita izrada)}
+    \label{fig:app-tipkanje}
+\end{center}
+
+Ovdje korisnik mora unijeti traženu frazu za potrebu prikupljanja podataka o njegovoj dinamici tipkanja, koja će se kasnije koristiti za dodatnu autentifikaciju. Od korisnika se zahtijeva da minimalno 10 puta uspješno podnese podatke o dinamici tipkanja kako bi se modelu pružio što veći broj podataka te samim time povećala preciznost njegove predikcije. Kada je broj uspješnih podnošenja dosegao vrijednost od 10 ili više, tada korisnik može završiti s ovom aktivnošću i pritisnuti gumb „Finish“. Korisnik će tada biti prebačen na web stranicu prijave u sustav.
+
+Pritiskom na gumb „Submit Data“, poslat će se POST zahtjev na endpoint za bilježenje podataka o dinamici tipkanja korisnika. Kod u nastavku prikazuje prethodno spomenuti endpoint.
+
+\begin{longlisting}
+\begin{minted}{python}
+@keystrokes.route('/keystrokes', methods=['GET', 'POST'])
+def show():
+    if request.method == 'POST':
+        keystrokes = request.json['keystrokes']
+        subject = request.json['subject']
+
+        dict1 = {}
+        dict1['subject'] = subject
+        dict1['sessionIndex'] = 0
+        dict1['rep'] = 0
+        for i in range(len(keystrokes)):
+            key_name = "H." + keystrokes[i]['key']
+            hold_time = (keystrokes[i]['upTime'] - keystrokes[i]['downTime']) / 1000
+            dict1[key_name] = hold_time
+
+            if i < len(keystrokes) - 1:
+                next_key = i + 1
+
+                dd_key_name = "DD." + keystrokes[i]['key'] + "." + keystrokes[next_key]['key']
+                down_down_time = (keystrokes[next_key]['downTime'] - keystrokes[i]['downTime']) / 1000
+                dict1[dd_key_name] = down_down_time
+
+                ud_key_name = "UD." + keystrokes[i]['key'] + "." + keystrokes[next_key]['key']
+                up_down_time = (keystrokes[next_key]['downTime'] - keystrokes[i]['upTime']) / 1000
+                dict1[ud_key_name] = up_down_time
+
+        file_path = 'key_dataset.csv'
+
+        file_exists = os.path.isfile(file_path)
+
+        with open(file_path, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=dict1.keys())
+
+            if not file_exists:
+                writer.writeheader()
+
+            writer.writerow(dict1)
+
+        return jsonify(dict1)
+    else:
+        return render_template('keystroke.html')
+\end{minted}
+\caption{Python kod za endpoint /keystrokes}
+\label{lst:python_tipkanje}
+\end{longlisting}
+
+Prvo se vrši obrada podataka o pritiscima na tipke, koja je identična kao i u slučaju endpointa za autentifikaciju korisnika pomoću dinamike tipkanja. Nakon obrade i izračuna, podaci se upisuju u pripadajuću .csv datoteku. Odgovor čini JSON oblik podataka dobivenih obradom. 
+
+Ako se na samom početku rada unutar aplikacije odabere opcija „Model“, tada će korisniku biti prikazana web stranica koja trenutno nudi samo jednu mogućnost, a to je treniranje modela. Odabirom te mogućnosti, šalje se GET zahtjev na endpoint prikazan u sljedećem isječku programskog koda.
+
+\begin{longlisting}
+\begin{minted}{python}
+@rfmodel.route('/train', methods=['GET'])
+def train():
+    file = request.args.get('file')
+    dataset = pd.read_csv("./" + file + ".csv")
     
-$$
-a^2 + b^2 = c^2
-$$
+    if 'sessionIndex' in dataset.columns and 'rep' in dataset.columns:
+        dataset.drop(['sessionIndex', 'rep'], axis=1, inplace=True)
 
-\subsection{Kratice}
+    X_train, X_test, y_train, y_test = [], [], [], []
+    subjects = dataset['subject'].unique()
+    for subject in subjects:
+        subject_dataset = dataset[dataset['subject'] == subject]
+        train_data, test_data = train_test_split(subject_dataset, test_size=0.2)
+        
+        X_train.append(train_data.iloc[:, 1:])
+        X_test.append(test_data.iloc[:, 1:])
+        y_train.extend(train_data['subject'])
+        y_test.extend(test_data['subject'])
 
-Želite li koristiti kratice pojmova u tekstu, kad prvi put spominjete pojam potrebno je navesti puni naziv, a kraticu navesti u zagradi: informacijske i komunikacijske tehnologije (IKT). Nakon toga možete koristiti kratice u tekstu. Poželjno je u naslovima koristiti pune nazive.
+    X_train = pd.concat(X_train, axis=0)
+    X_test = pd.concat(X_test, axis=0)
+    y_train = pd.Series(y_train)
+    y_test = pd.Series(y_test)
 
-Kratice je moguće definirati i korištenjem naredbe \mintinline{text}{\acrodef{}{}}, iz \mintinline{text}{acronym} paketa, prije početka dokumenta (naredba \mintinline{text}{\begin{document}}). Tako definirane kratice pozivaju se unutar dokumenta naredbom \mintinline{text}{\ac{}} ili \mintinline{text}{\Ac{}} za veliko početno slovo. Takva će naredba svoje prvo pojavljivanje u dokumentu zamijeniti potpuno ispisanim značenjem kratice i kraticom, dok će svako sljedeće pojavljivanje biti zamijenjeno samo postavljenom kraticom, npr.: \Ac{VAS} je sustav koji se sastoji od većeg broja agenata. Prilikom ponovnog korištenja naredbe, ispisana je samo kratica: \ac{VAS}.
+    ss = StandardScaler()
+    ss.fit(X_train)
+    X_train = ss.transform(X_train)
+    X_test = ss.transform(X_test)
 
-\subsection{Strano nazivlje}
+    best_model = RandomForestClassifier(n_estimators = 339, max_depth = 18)
+    best_model.fit(X_train, y_train.values.ravel())
+    joblib.dump(best_model, 'best_model.pkl')
+    joblib.dump(ss, 'scaler.pkl')
 
-Strano nazivlje se u tekstu navodi u zagradi, napisano \textit{kurzivom}, nakon hrvatskog izraza, npr. analiza društvene mreže (engl. \textit{Social Network Analysis - SNA}).
+    y_pred = best_model.predict(X_test)
 
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='weighted')
 
+    results = {
+        'accuracy': accuracy,
+        'precision': precision
+    }
+    return jsonify(results)
+\end{minted}
+\caption{Python kod za endpoint /train}
+\label{lst:python_train}
+\end{longlisting}
 
-\section{Navođenje literature}
+Pomoću request.args.get('file') dohvaća se ime datoteke iz zahtjeva, zatim se čita ta datoteka. Uklanjaju se stupci „sessionIndex“ i „rep“. Podaci se dijele na trening i testne skupove. Podaci za svaki subjekt se razdvajaju, pri čemu se 80\% podataka koristi za trening, a 20\% za testiranje. Podaci se standardiziraju koristeći StandardScaler, a zatim se podaci i ciljevi pripremaju za treniranje modela. Algoritam RandomForestClassifier se inicijalizira s odabranim parametrima, trenira na trening podacima i pohranjuje kao 'best\_model.pkl'. Također se pohranjuje objekt StandardScaler kao 'scaler.pkl'. Model se testira na testnim podacima i izračunava se točnost i preciznost predikcije. Rezultati se vraćaju kao JSON odgovor. Na slici ispod prikazani su rezultati predikcije od strane modela.
 
-Za navođenje literature u radu koristite \textbf{IEEE} stil. Važno je dosljedno primjenjivati odabrani stil u cijelom radu.
-
-U popisu literature potrebno je navesti svu literaturu i samo literaturu koju ste koristili u tekstu.
-
-Uz svaku preuzetu tvrdnju potrebno je navesti njezin izvor, tj. referencu. Reference se u tekstu navode tako da se uz citirani tekst navede izvor, sukladno načinu propisanom odabranim stilom i FOI preporukama za citiranje i referenciranje \cite{sveucilisteuzagrebufakultetorganizacijeiinformatike2017FOIPreporukeCitiranja}. Prilikom referenciranja knjiga, uvijek je potrebno navoditi i broj ili brojeve stranica.
-
-Za citate i njihovo referenciranje koristite naredbu \mintinline{text}{\blockquote} kako slijedi. Citat će se automatski oblikovati kako je potrebno, ovisno o duljini citata. U kratkom citatu je pojašnjeno da bi se hibridna platforma za orkestraciju mogla u domeni videoigara koristiti
-\blockquote[{\cite[str. 5]{schatten2020PlatformeZaOrkestraciju}}]{za implementaciju većeg broja inteligentnijih, a samim
-time i interesantnijih, suparnika.} Ono što slijedi nakon obavezno navedenog broja stranice uz izvor citata je primjer duljeg citata.
-
-\blockquote[{\cite[str. 6]{schatten2020PlatformeZaOrkestraciju}}]{Iako je testiranje performansi MMO igara dobro implementirano na brojnim platformama, testiranje iskustva
-igranja (posebno u primjerice MMORPG igrama) velikog razmjera postaje iznimno složen zadatak, kao što
-je okvirno predstavljeno u (Schatten, Okreša Ðurić, Tomičić i Ivković, 2017). Ne samo da je potrebno testirati
-razne logičke zagonetke i zadatke koje igrač mora riješiti kako bi napredovao u igri, već i pojavljujuću interakciju među igračima koja bi mogla u potpunosti promijeniti rezultat igre. Korištenjem distribuirane platforme za orkestraciju bilo bi moguće dodavanje automatiziranih igrača po volji instanciranjem novih agenata. Štoviše, rezultati testiranja mogli bit biti dodatno
-analizirani dodavanjem agenata za analizu ili izvještavanje.}
-
-Podaci o svim bibliografskim jedinicama nalaze se u \mintinline{text}{lib.bib} datoteci u \mintinline{text}{BibLaTeX} formatu. Bibliografske jedinice korištene u ovom dokumentu su:
-\begin{itemize}
-    \item knjige \cite{russell2022ArtificialIntelligenceModern,wooldridge2009IntroductionMultiAgentSystems,oraictolic2011AkademskoPismoStrategije},
-    \item članak s konferencije \cite{okresaduric2019ModellingFormingTemporary},
-    \item članci iz časopisa \cite{SchattenEtAl2016roadmap,rincon2017InfluencingPeopleSocial},
-    \item web-stranica \cite{copeland2020ArtificialIntelligence}.
-\end{itemize}
-
-
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{slike/app_model_rezultati.png}
+    \captionof{figure}{Rezultati treniranja modela (vlastita izrada)}
+    \label{fig:app-model-rezultati}
+\end{center}
 
 \chapter{Zaključak}
 
-Ovdje treba sažeto rezimirati najvažnije rezultate razrade teme rada. Potrebno je sažeto opisati što je predmet rada \cite{copeland2020ArtificialIntelligence}, koje su metode, tehnike, programski alati ili aplikacije korištene u razradi rada te koje su pretpostavke dokazane, a koje opovrgnute. Sadržajno, ono što se u uvodu rada najavljuje i kasnije je obuhvaćeno u samom radu, moralo bi biti opisano u zaključnom dijelu kroz rezultate rada. 
+Ovaj rad je teorijski obradio dinamiku tipkanja kao biometrijsku karakteristiku te metode dubokog i klasičnog strojnog učenja koji se mogu koristiti za analizu dinamike tipkanja. Osim toga rad je istražio i opisao razne skupove podataka dinamike tipkanja. Nakon tog istraživanja napravljen je model korištenjem random forest metode i zapisana su opažanja najboljih parametara i skupa podataka za njega. Da bi se pokazala korist ovoga modela napravljena je web aplikacija koja koristi napravljeni model za dvofaktorsku autentifikaciju korisnika koja koristit dinamiku tipkanja s korisničkim imenom i lozinkom. Cijeli taj proces izrade i način rada je opisan u radu. 
 
-\lipsum[1-2]
+Preciznost i točnost našeg modela koji je dobiven sa metodom random forest je između 92 i 94 posto što je dobar rezultat i ovim radom je pokazano da se dinamika tipkanja može koristit kao dodatni faktor kod autentifikacije korisnika u realnom sustavu. 
+
+
 
 \makebackmatter
-% generira popis korištene literature, popis slika (ako je primjenjivo), popis tablica (ako je primjenjivo) i popis isječaka koda (ako je primjenjivo)
-
-\appendices % ako nije potrebno, obrisati ili zakomentirati
-
-\chapter{Prilog 1} % ako nije potrebno, obrisati ili zakomentirati
-
-\chapter{Prilog 2} % ako nije potrebno, obrisati ili zakomentirati
 
 \end{document}
